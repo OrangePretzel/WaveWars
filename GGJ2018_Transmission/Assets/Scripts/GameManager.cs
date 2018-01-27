@@ -12,7 +12,7 @@ public UIHelper UIHelper;
 
 public void InitGameManager(Player p)
   {
-    UIHelper = GameObject.Find("Camera UI").GetComponent<UIHelper>();
+    //UIHelper = GameObject.Find("Camera UI").GetComponent<UIHelper>();
   }
 
 public class Stats
