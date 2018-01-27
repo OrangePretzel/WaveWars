@@ -9,9 +9,6 @@ public class Test : MonoBehaviour
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			if (InputManager.GetPlayerInput(i, ref playerInput[i]))
-			{
-			}
 		}
 	}
 
@@ -22,16 +19,16 @@ public class Test : MonoBehaviour
 		{
 			GUI.Label(new Rect(0, 0, 1000, 1000), $@"
 Player 1:
-{playerInput[0]}
+{InputManager.GetPlayerInput(0)}
 
 Player 2:
-{playerInput[1]}
+{InputManager.GetPlayerInput(1)}
 
 Player 3:
-{playerInput[2]}
+{InputManager.GetPlayerInput(2)}
 
 Player 4:
-{playerInput[3]}
+{InputManager.GetPlayerInput(3)}
 ");
 		}
 	}
