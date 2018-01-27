@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerInput
 {
@@ -31,7 +32,25 @@ Select: ({Select})";
 
 public class InputManager : MonoBehaviour
 {
+	#region Singleton
+
+	private static InputManager instance;
+
+	private void MakeSingleton()
+	{
+		if (instance != null && instance != this)
+		{
+			Destroy(this);
+		}
+
+		instance = this;
+	}
+
+	#endregion
+
 	private const int MAX_PLAYERS = 4;
+
+	public static Action<int> OnResetPlayerDevices;
 
 	private InControl.InputDevice[] playerDevices = new InControl.InputDevice[MAX_PLAYERS];
 	private PlayerInput[] playerInputs = new PlayerInput[MAX_PLAYERS];
@@ -40,15 +59,28 @@ public class InputManager : MonoBehaviour
 
 	private void Awake()
 	{
+		MakeSingleton();
+
 		ResetPlayerDevices();
 		InControl.InputManager.OnDeviceAttached += inputDevice => { Debug.Log($"Device [{inputDevice.Name}] attached"); };
 		InControl.InputManager.OnDeviceDetached += inputDevice =>
 		{
+			Debug.Log($"Device [{inputDevice.Name}] detached");
+			bool needsReset = false;
 			foreach (var playerDevice in playerDevices)
 			{
-
+				if (playerDevice == inputDevice)
+				{
+					needsReset = true;
+					break;
+				}
 			}
-			Debug.Log($"Device [{inputDevice.Name}] detached");
+
+			if (needsReset)
+			{
+				ResetPlayerDevices();
+			}
+			Debug.Log($"All devices reset!");
 		};
 	}
 
@@ -73,18 +105,24 @@ public class InputManager : MonoBehaviour
 
 	#endregion
 
-	public PlayerInput GetPlayerInput(int playerID)
+	public static PlayerInput GetPlayerInput(int playerID)
 	{
-		return playerInputs[playerID];
+		return instance.playerInputs[playerID];
 	}
 
 	private void ResetPlayerDevices()
 	{
+		int numberOfOldDevices = 0;
 		for (int i = 0; i < MAX_PLAYERS; i++)
 		{
+			if (playerDevices[i] != null)
+				numberOfOldDevices++;
+
 			playerDevices[i] = null;
 			playerInputs[i] = new PlayerInput() { PlayerID = i };
 		}
+
+		OnResetPlayerDevices?.Invoke(numberOfOldDevices);
 	}
 
 	private void SetNextPlayer(InControl.InputDevice inputDevice)
