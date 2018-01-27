@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
+public InputManager InputManager;
 public Rigidbody2D rb;
 public float speed;
 
@@ -14,10 +15,9 @@ void Awake()
 
 void Update()
 {
-  float moveHorizontal = Input.GetAxis("Horizontal");
-  float moveVertical = Input.GetAxis("Vertical");
-  rb.velocity = new Vector2(moveHorizontal * speed, moveVertical * speed);
- // rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
+  var playerInput = InputManager.GetPlayerInput(0);
+  rb.velocity = new Vector2(playerInput.HorizontalMovement*speed, playerInput.VerticalMovement*speed);
+  rb.MovePosition(rb.position + rb.velocity * Time.fixedDeltaTime);
 }
 
 }
