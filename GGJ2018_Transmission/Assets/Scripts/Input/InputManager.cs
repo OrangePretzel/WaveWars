@@ -1,100 +1,115 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
 
+public struct PlayerInput
+{
+	public int PlayerID;
+	public PlayerInputMethod InputMethod;
+
+	public float HorizontalMovement;
+	public float VerticalMovement;
+	public float HorizontalAim;
+	public float VerticalAim;
+
+	public bool PushTransmission;
+	public bool PullTransmission;
+
+	public bool Menu;
+	public bool Select;
+
+	public Vector3 FixAimForKeyboard(Vector3 originPos)
+	{
+		// TODO: Test this
+		if (InputMethod == PlayerInputMethod.Keyboard)
+		{
+			return (Camera.main.ScreenToWorldPoint(new Vector3(HorizontalAim, VerticalAim)) - originPos).normalized;
+		}
+		return new Vector3(HorizontalAim, VerticalAim);
+	}
+
+	public override string ToString()
+	{
+		return $@"Player: ({PlayerID})
+Input Method: ({InputMethod})
+Movement: ({HorizontalMovement}, {VerticalMovement})
+Aim: ({HorizontalAim}, {VerticalAim})
+Push: ({PushTransmission})
+Pull: ({PullTransmission})
+Menu: ({Menu})
+Select: ({Select})";
+	}
+}
+
+public enum PlayerInputMethod
+{
+	None,
+	Keyboard,
+	Controller1,
+	Controller2,
+	Controller3,
+	Controller4
+}
+
 public class InputManager : MonoBehaviour
 {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 	private const int MAX_PLAYERS = 4;
-	private PlayerIndex?[] playerIndexMap = new PlayerIndex?[4];
-	private GamePadState[] playerGamePadStates = new GamePadState[4];
+
+	// TODO: Probably should map from PlayerInputMethod to Player ID instead of this (vice versa)
+	private PlayerInputMethod[] playerInputMethods = new PlayerInputMethod[MAX_PLAYERS];
+	private PlayerInput[] playerInputs = new PlayerInput[MAX_PLAYERS];
 
 	private void FixedUpdate()
 	{
-		UpdatePlayerIndexMap();
+		ScanForKeyboard();
+		ScanForControllers();
+		DisconnectInvalidInputMethods();
 	}
 
-	float x = 0;
-	float dir = 1;
 	private void Update()
 	{
-		UpdateGamePadStates();
-
-		x += Time.deltaTime * 0.1f * dir;
-		if (dir > 0 && x >= 1)
-		{
-			dir = -dir;
-			x = 1;
-		}
-		else if (dir < 0 && x <= 0)
-		{
-			dir = -dir;
-			x = 0;
-		}
-
-		for (int i = 0; i < MAX_PLAYERS; i++)
-		{
-			SetVibration(i, x, x);
-		}
+		UpdatePlayerInput();
 	}
 
 	private void OnGUI()
 	{
-		const bool DEBUG_GUI = true;
+		const bool DEBUG_GUI = false;
 		if (DEBUG_GUI)
 		{
-			var p1 = playerIndexMap[0] == null ? "No Input Method" : playerIndexMap[0].ToString();
-			var p2 = playerIndexMap[1] == null ? "No Input Method" : playerIndexMap[1].ToString();
-			var p3 = playerIndexMap[2] == null ? "No Input Method" : playerIndexMap[2].ToString();
-			var p4 = playerIndexMap[3] == null ? "No Input Method" : playerIndexMap[3].ToString();
 			GUI.Label(new Rect(0, 0, 1000, 1000), $@"
-Player 1: {p1}
-Player 2: {p2}
-Player 3: {p3}
-Player 4: {p4}
+Player 1: {playerInputMethods[0]}
+Player 2: {playerInputMethods[1]}
+Player 3: {playerInputMethods[2]}
+Player 4: {playerInputMethods[3]}
 ");
 		}
 	}
 
-	public void SetVibration(int playerID, float leftMotor, float rightMotor)
+	public void SetNextPlayer(PlayerInputMethod playerInputMethod)
 	{
-		if (playerID >= MAX_PLAYERS || playerID < 0 || !playerIndexMap[playerID].HasValue)
-			return; // Invalid player ID or no controller connected
+		if (playerInputMethod == PlayerInputMethod.None)
+			return; // What are you doing?
 
-		GamePad.SetVibration(playerIndexMap[playerID].Value, leftMotor, rightMotor);
-	}
-
-#endif
-	private void UpdatePlayerIndexMap()
-	{
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-		// TODO: Add support for plug and play
-		for (int i = 0; i < MAX_PLAYERS; i++) // We only support maximum four players
+#if !UNITY_STANDALONE_WIN && !UNITY_EDITOR_WIN
+		// No controller support on non Windows platforms :(
+		if (playerInputMethod != PlayerInputMethod.Keyboard)
 		{
-			// For each player try and get the state
-			PlayerIndex playerIndex = (PlayerIndex)i;
-			GamePadState testState = GamePad.GetState(playerIndex);
-			if (testState.IsConnected) // Check if connected
-			{
-				SetNextPlayerIndex(playerIndex); // Add them to the list of connected players
-			}
+			Debug.LogWarning("Sorry no controller support on this platform");
+			return;
 		}
 #endif
-	}
 
-	private void SetNextPlayerIndex(PlayerIndex playerIndex)
-	{
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 		const int INVALID = -1; // Represents an invalid player/controller map
 		int potentialPos = INVALID;
 
 		for (int i = 0; i < MAX_PLAYERS; i++)
 		{
-			if (playerIndexMap[i] == playerIndex)
+			if (playerInputMethods[i] == playerInputMethod)
 			{
 				return; // Already using this player index
 			}
-			else if (playerIndexMap[i] == null && potentialPos == INVALID)
+			else if (playerInputMethods[i] == PlayerInputMethod.None && potentialPos == INVALID)
 			{
 				// Potentially a place for this player index (still need to check the rest of the array)
 				potentialPos = i;
@@ -104,29 +119,152 @@ Player 4: {p4}
 		if (potentialPos != INVALID)
 		{
 			// Found a position for the controller
-			playerIndexMap[potentialPos] = playerIndex;
+			Debug.Log($"Player {potentialPos + 1} is using {playerInputMethod}");
+			playerInputMethods[potentialPos] = playerInputMethod;
+			playerInputs[potentialPos].InputMethod = playerInputMethod;
+		}
+	}
+
+	public bool GetPlayerInput(int playerID, ref PlayerInput playerInput)
+	{
+		if (playerID < 0 || playerID >= MAX_PLAYERS || playerInputMethods[playerID] == PlayerInputMethod.None)
+			return false;
+
+		playerInput = playerInputs[playerID];
+
+		return true;
+	}
+
+	private void UpdatePlayerInput()
+	{
+		for (int i = 0; i < MAX_PLAYERS; i++)
+		{
+			var playerInputMethod = playerInputMethods[i];
+			playerInputs[i].InputMethod = playerInputMethod;
+			playerInputs[i].PlayerID = i + 1;
+			switch (playerInputMethod)
+			{
+				case PlayerInputMethod.Keyboard:
+					UpdateKeyboardInput(ref playerInputs[i]);
+					break;
+				case PlayerInputMethod.Controller1:
+				case PlayerInputMethod.Controller2:
+				case PlayerInputMethod.Controller3:
+				case PlayerInputMethod.Controller4:
+					UpdateControllerInput(ref playerInputs[i], (int)playerInputMethod - 2); // 2 is the offset for controllers
+					break;
+				case PlayerInputMethod.None:
+				default:
+					continue;
+			}
+		}
+	}
+
+	#region Keyboard Support
+
+	private void UpdateKeyboardInput(ref PlayerInput playerInput)
+	{
+		playerInput.HorizontalMovement = Input.GetAxis("Keyboard_MovementHorizontal");
+		playerInput.VerticalMovement = Input.GetAxis("Keyboard_MovementVertical");
+		playerInput.HorizontalAim = Input.mousePosition.x;
+		playerInput.VerticalAim = Input.mousePosition.y;
+
+		playerInput.PushTransmission = Input.GetButton("Keyboard_PushTransmission");
+		playerInput.PullTransmission = Input.GetButton("Keyboard_PullTransmission");
+
+		playerInput.Menu = Input.GetButton("Keyboard_Menu");
+		playerInput.Select = Input.GetButton("Keyboard_Select");
+	}
+
+	private void ScanForKeyboard()
+	{
+		if (Input.GetButtonDown("Keyboard_Menu") || Input.GetButtonDown("Keyboard_Select"))
+		{
+			SetNextPlayer(PlayerInputMethod.Keyboard);
+		}
+	}
+
+	#endregion
+
+	#region Controller Support
+
+	private void UpdateControllerInput(ref PlayerInput playerInput, int controllerID)
+	{
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+		// Try and get the state
+		PlayerIndex playerIndex = (PlayerIndex)controllerID;
+		GamePadState testState = GamePad.GetState(playerIndex);
+
+		if (!testState.IsConnected) // Check if connected
+		{
+			return;
+		}
+
+		playerInput.HorizontalMovement = testState.ThumbSticks.Left.X;
+		playerInput.VerticalMovement = testState.ThumbSticks.Left.Y;
+		playerInput.HorizontalAim = testState.ThumbSticks.Right.X;
+		playerInput.VerticalAim = testState.ThumbSticks.Right.Y;
+
+		playerInput.PushTransmission = testState.Triggers.Right != 0;
+		playerInput.PullTransmission = testState.Triggers.Left != 0;
+
+		playerInput.Menu = testState.Buttons.Start == ButtonState.Pressed;
+		playerInput.Select = testState.Buttons.A == ButtonState.Pressed;
+#endif
+	}
+
+	private void ScanForControllers()
+	{
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+		for (int i = 0; i < MAX_PLAYERS; i++)
+		{
+			PlayerIndex playerIndex = (PlayerIndex)i;
+			GamePadState testState = GamePad.GetState(playerIndex);
+			if (testState.IsConnected) // Check if connected
+			{
+				if (testState.Buttons.Start == ButtonState.Pressed)
+					SetNextPlayer((PlayerInputMethod)(i + 2));
+			}
+			else
+				DisconnectController((PlayerInputMethod)(i + 2));
 		}
 #endif
 	}
 
-	private void UpdateGamePadStates()
+	private void DisconnectController(PlayerInputMethod playerInputMethod)
 	{
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-		PlayerIndex? playerIndex;
 		for (int i = 0; i < MAX_PLAYERS; i++)
 		{
-			playerIndex = playerIndexMap[i]; // For each player, get the associated gamepad
-			if (playerIndex == null)
-				continue;
-
-			// Update the gamepad state
-			playerGamePadStates[i] = GamePad.GetState(playerIndex.Value);
-
-			if (!playerGamePadStates[i].IsConnected)
+			if (playerInputMethods[i] == playerInputMethod)
 			{
-				playerIndexMap[i] = null;
+				playerInputMethods[i] = PlayerInputMethod.None;
 			}
 		}
-#endif
+	}
+
+	#endregion
+
+	private void DisconnectInvalidInputMethods()
+	{
+		for (int i = 0; i < MAX_PLAYERS; i++)
+		{
+			if (playerInputMethods[i] == PlayerInputMethod.None)
+			{
+				playerInputs[i].InputMethod = PlayerInputMethod.None;
+
+				playerInputs[i].HorizontalMovement = 0;
+				playerInputs[i].VerticalMovement = 0;
+				playerInputs[i].HorizontalAim = 0;
+				playerInputs[i].VerticalAim = 0;
+
+				playerInputs[i].PushTransmission = false;
+				playerInputs[i].PullTransmission = false;
+
+				playerInputs[i].Menu = false;
+				playerInputs[i].Select = false;
+
+				break;
+			}
+		}
 	}
 }
