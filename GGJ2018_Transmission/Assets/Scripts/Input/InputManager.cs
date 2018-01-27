@@ -42,7 +42,14 @@ public class InputManager : MonoBehaviour
 	{
 		ResetPlayerDevices();
 		InControl.InputManager.OnDeviceAttached += inputDevice => { Debug.Log($"Device [{inputDevice.Name}] attached"); };
-		InControl.InputManager.OnDeviceDetached += inputDevice => { Debug.Log($"Device [{inputDevice.Name}] detached"); };
+		InControl.InputManager.OnDeviceDetached += inputDevice =>
+		{
+			foreach (var playerDevice in playerDevices)
+			{
+
+			}
+			Debug.Log($"Device [{inputDevice.Name}] detached");
+		};
 	}
 
 	private void FixedUpdate()
