@@ -4,14 +4,10 @@ using XInputDotNetPure;
 
 public class InputManager : MonoBehaviour
 {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 	private const int MAX_PLAYERS = 4;
 	private PlayerIndex?[] playerIndexMap = new PlayerIndex?[4];
 	private GamePadState[] playerGamePadStates = new GamePadState[4];
-
-	private void Start()
-	{
-		//UpdatePlayerIndexMap();
-	}
 
 	private void FixedUpdate()
 	{
@@ -47,10 +43,10 @@ public class InputManager : MonoBehaviour
 		const bool DEBUG_GUI = true;
 		if (DEBUG_GUI)
 		{
-			var p1 = playerIndexMap[0] == null ? "No Controller" : playerIndexMap[0].ToString();
-			var p2 = playerIndexMap[1] == null ? "No Controller" : playerIndexMap[1].ToString();
-			var p3 = playerIndexMap[2] == null ? "No Controller" : playerIndexMap[2].ToString();
-			var p4 = playerIndexMap[3] == null ? "No Controller" : playerIndexMap[3].ToString();
+			var p1 = playerIndexMap[0] == null ? "No Input Method" : playerIndexMap[0].ToString();
+			var p2 = playerIndexMap[1] == null ? "No Input Method" : playerIndexMap[1].ToString();
+			var p3 = playerIndexMap[2] == null ? "No Input Method" : playerIndexMap[2].ToString();
+			var p4 = playerIndexMap[3] == null ? "No Input Method" : playerIndexMap[3].ToString();
 			GUI.Label(new Rect(0, 0, 1000, 1000), $@"
 Player 1: {p1}
 Player 2: {p2}
@@ -68,8 +64,10 @@ Player 4: {p4}
 		GamePad.SetVibration(playerIndexMap[playerID].Value, leftMotor, rightMotor);
 	}
 
+#endif
 	private void UpdatePlayerIndexMap()
 	{
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 		// TODO: Add support for plug and play
 		for (int i = 0; i < MAX_PLAYERS; i++) // We only support maximum four players
 		{
@@ -81,10 +79,12 @@ Player 4: {p4}
 				SetNextPlayerIndex(playerIndex); // Add them to the list of connected players
 			}
 		}
+#endif
 	}
 
 	private void SetNextPlayerIndex(PlayerIndex playerIndex)
 	{
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 		const int INVALID = -1; // Represents an invalid player/controller map
 		int potentialPos = INVALID;
 
@@ -106,10 +106,12 @@ Player 4: {p4}
 			// Found a position for the controller
 			playerIndexMap[potentialPos] = playerIndex;
 		}
+#endif
 	}
 
 	private void UpdateGamePadStates()
 	{
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 		PlayerIndex? playerIndex;
 		for (int i = 0; i < MAX_PLAYERS; i++)
 		{
@@ -125,5 +127,6 @@ Player 4: {p4}
 				playerIndexMap[i] = null;
 			}
 		}
+#endif
 	}
 }
