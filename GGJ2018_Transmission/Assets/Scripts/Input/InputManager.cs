@@ -103,6 +103,27 @@ public class InputManager : MonoBehaviour
 		UpdatePlayerInputs();
 	}
 
+	private void OnGUI()
+	{
+		const bool DEBUG_GUI = true;
+		if (DEBUG_GUI)
+		{
+			GUI.Label(new Rect(0, 0, 1000, 1000), $@"
+Player 1:
+{GetPlayerInput(0)}
+
+Player 2:
+{GetPlayerInput(1)}
+
+Player 3:
+{GetPlayerInput(2)}
+
+Player 4:
+{GetPlayerInput(3)}
+");
+		}
+	}
+
 	#endregion
 
 	public static PlayerInput GetPlayerInput(int playerID)
