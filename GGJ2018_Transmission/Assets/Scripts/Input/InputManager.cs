@@ -110,7 +110,18 @@ public class InputManager : MonoBehaviour
 
 			var playerInput = playerInputs[i];
 			playerInput.PlayerDevice = inputDevice.Name;
+
 			playerInput.HorizontalMovement = inputDevice.LeftStick.X;
+			playerInput.VerticalMovement = inputDevice.LeftStick.Y;
+
+			playerInput.HorizontalAim = inputDevice.RightStick.X;
+			playerInput.VerticalAim = inputDevice.RightStick.Y;
+
+			playerInput.PushTransmission = inputDevice.RightTrigger;
+			playerInput.PullTransmission = inputDevice.LeftTrigger;
+
+			playerInput.Menu = inputDevice.Command;
+			playerInput.Select = inputDevice.Action1;
 		}
 	}
 }
