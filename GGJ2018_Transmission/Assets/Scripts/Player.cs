@@ -17,7 +17,7 @@ void Update()
   float moveHorizontal = Input.GetAxis("Horizontal");
   float moveVertical = Input.GetAxis("Vertical");
   rb.velocity = new Vector2(moveHorizontal * speed, moveVertical * speed);
-  rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
+ // rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
 }
 
 }
