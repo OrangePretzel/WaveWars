@@ -3,9 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
-public InputManager InputManager;
 public Rigidbody2D rb;
 public float speed;
+//public playerID id;
 
 void Awake()
  {
