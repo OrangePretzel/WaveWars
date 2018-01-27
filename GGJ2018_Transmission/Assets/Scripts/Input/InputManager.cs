@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 using XInputDotNetPure;
+#endif
 
 public class InputManager : MonoBehaviour
 {
@@ -64,10 +66,8 @@ Player 4: {p4}
 		GamePad.SetVibration(playerIndexMap[playerID].Value, leftMotor, rightMotor);
 	}
 
-#endif
 	private void UpdatePlayerIndexMap()
 	{
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 		// TODO: Add support for plug and play
 		for (int i = 0; i < MAX_PLAYERS; i++) // We only support maximum four players
 		{
@@ -79,12 +79,10 @@ Player 4: {p4}
 				SetNextPlayerIndex(playerIndex); // Add them to the list of connected players
 			}
 		}
-#endif
 	}
 
 	private void SetNextPlayerIndex(PlayerIndex playerIndex)
 	{
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 		const int INVALID = -1; // Represents an invalid player/controller map
 		int potentialPos = INVALID;
 
@@ -106,12 +104,10 @@ Player 4: {p4}
 			// Found a position for the controller
 			playerIndexMap[potentialPos] = playerIndex;
 		}
-#endif
 	}
 
 	private void UpdateGamePadStates()
 	{
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 		PlayerIndex? playerIndex;
 		for (int i = 0; i < MAX_PLAYERS; i++)
 		{
@@ -127,6 +123,7 @@ Player 4: {p4}
 				playerIndexMap[i] = null;
 			}
 		}
-#endif
+
 	}
+	#endif
 }
