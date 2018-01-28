@@ -754,6 +754,11 @@ Prefab:
       propertyPath: m_Offset.y
       value: -0.80985355
       objectReference: {fileID: 0}
+    - target: {fileID: 114464415666742834, guid: d9ab12765bb43f84cb41cc0eb13608cf,
+        type: 2}
+      propertyPath: maxHP
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d9ab12765bb43f84cb41cc0eb13608cf, type: 2}
   m_IsPrefabParent: 0
@@ -1019,7 +1024,7 @@ Prefab:
     - target: {fileID: 224671136119006528, guid: 69d70777c489af74fa395c8ad8bed724,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -92.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 69d70777c489af74fa395c8ad8bed724, type: 2}
@@ -1174,6 +1179,11 @@ Prefab:
         type: 2}
       propertyPath: m_Size.x
       value: 7.897646
+      objectReference: {fileID: 0}
+    - target: {fileID: 114883078262539712, guid: 21113f6a07b4222479c45073bf04e933,
+        type: 2}
+      propertyPath: maxHP
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 21113f6a07b4222479c45073bf04e933, type: 2}
