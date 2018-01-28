@@ -48,6 +48,7 @@ public class Player : Entity
 		playerInput = InputManager.GetPlayerInput(playerID);
 
 		var aimVec = playerInput.GetNormalizedAim(transform.position, Camera.main);
+		aimVec.x *= transform.localScale.x;
 		bool isTransmitting = aimVec.sqrMagnitude != 0
 			&& (playerInput.PlayerDevice != InputManager.KEYBOARD_AND_MOUSE || Input.GetKey(KeyCode.Mouse0));
 

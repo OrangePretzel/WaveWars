@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	public static void RespawnPlayer(Player deadPlayer)
+	public static void RespawnPlayer(Player deadPlayer, bool instant = false)
 	{
 		if (deadPlayer.TeamID == 0) // Team A
 		{
@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
 			{
 				if (!spawner.IsSpawning())
 				{
-					spawner.Spawn(deadPlayer);
+					spawner.Spawn(deadPlayer, instant ? 0 : 10);
 					return;
 				}
 			}
@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
 			{
 				if (!spawner.IsSpawning())
 				{
-					spawner.Spawn(deadPlayer);
+					spawner.Spawn(deadPlayer, instant ? 0 : 10);
 					return;
 				}
 			}
@@ -163,6 +163,7 @@ public class GameManager : MonoBehaviour
 						var objPlayer = newObj.GetComponent<Player>();
 						objPlayer.PlayerID = i;
 						TeamAPlayers.Add(objPlayer);
+						RespawnPlayer(objPlayer);
 					}
 
 					if (TeamBPlayers.Exists(p => p.PlayerID == i))
@@ -185,6 +186,7 @@ public class GameManager : MonoBehaviour
 						var objPlayer = newObj.GetComponent<Player>();
 						objPlayer.PlayerID = i;
 						TeamBPlayers.Add(objPlayer);
+						RespawnPlayer(objPlayer);
 					}
 
 					if (TeamAPlayers.Exists(p => p.PlayerID == i))
