@@ -614,7 +614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSettings:
-    UnlimitedTransmission: 1
+    UnlimitedTransmission: 0
   TeamAEntities: []
   TeamBEntities: []
   IsInPlayerSelection: 0
