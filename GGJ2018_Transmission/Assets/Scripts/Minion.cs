@@ -24,11 +24,12 @@ public class Minion : Entity
 	private Vector2 waveAffect;
 
 	[SerializeField]
-	private int hp;
+	private int hp, damage;
 
 	private void OnEnable()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
+		hp=100;
 	}
 
 	private void Update()
@@ -66,8 +67,6 @@ public class Minion : Entity
 			Debug.DrawLine(transform.position, transform.position + (Vector3)rigidbody.velocity);
 		if (IsAffectedByWave)
 		{
-			// Velocity Debug Line
-
 			var enemy = GetNearbyEnemyEntity();
 			if (enemy == null)
 			{
@@ -95,6 +94,14 @@ public class Minion : Entity
 			AffectedByPlayerIDs.Clear();
 			waveAffect = Vector2.zero;
 		}
+		if (hp<=0){
+			Destroy(this.gameObject);
+		}
+	}
+
+	private void Attack(Minion other)
+	{
+		other.hp-=damage;
 	}
 
 	private Entity GetNearbyEnemyEntity()
@@ -104,10 +111,11 @@ public class Minion : Entity
 		foreach (var enemy in enemies)
 		{
 			var enemyDir = enemy.transform.position - transform.position;
+			// if there's an enemy within the cutoff radius:
 			if (enemyDir.sqrMagnitude <= NEARBY_ENEMY_DIST_CUTOFF_SQR)
 				return enemy;
 		}
-
+		// no enemy within radius
 		return null;
 	}
 }
