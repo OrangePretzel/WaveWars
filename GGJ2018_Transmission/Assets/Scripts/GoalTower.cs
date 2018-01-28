@@ -10,7 +10,7 @@ public class GoalTower : Entity
 
     void Start()
     {
-        
+        hp = maxHP;
     }
 
     void Update()

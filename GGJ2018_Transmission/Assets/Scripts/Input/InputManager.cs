@@ -47,6 +47,10 @@ Back: ({Back})";
 
 public class InputManager : MonoBehaviour
 {
+	private static bool WasSelectDown = false;
+	private static bool WasMenuDown = false;
+	private static bool WasBackDown = false;
+
 	public const string KEYBOARD_AND_MOUSE = "Keyboard and Mouse";
 
 	private class InputMode
@@ -85,10 +89,13 @@ public class InputManager : MonoBehaviour
 		MakeSingleton();
 
 		ResetPlayerDevices();
-		InControl.InputManager.OnDeviceAttached += inputDevice => { Debug.Log($"Device [{inputDevice.Name}] attached"); };
+		InControl.InputManager.OnDeviceAttached += inputDevice =>
+		{
+			//Debug.Log($"Device [{inputDevice.Name}] attached");
+		};
 		InControl.InputManager.OnDeviceDetached += inputDevice =>
 		{
-			Debug.Log($"Device [{inputDevice.Name}] detached");
+			//Debug.Log($"Device [{inputDevice.Name}] detached");
 			bool needsReset = false;
 			foreach (var playerDevice in playerDevices)
 			{
@@ -183,7 +190,7 @@ Player 4:
 
 		if (potentialPlayerID != INVALID)
 		{
-			Debug.Log($"Player {potentialPlayerID + 1} controller set to Keyboard and Mouse");
+			//Debug.Log($"Player {potentialPlayerID + 1} controller set to Keyboard and Mouse");
 			playerDevices[potentialPlayerID] = new InputMode()
 			{
 				IsKeyboardAndMouse = true,
@@ -207,7 +214,7 @@ Player 4:
 
 		if (potentialPlayerID != INVALID)
 		{
-			Debug.Log($"Player {potentialPlayerID + 1} controller set to {inputDevice.Name}");
+			//Debug.Log($"Player {potentialPlayerID + 1} controller set to {inputDevice.Name}");
 			playerDevices[potentialPlayerID] = new InputMode()
 			{
 				IsKeyboardAndMouse = false,
@@ -266,9 +273,17 @@ Player 4:
 		playerInput.PushTransmission = Input.GetKey(KeyCode.Mouse0);
 		playerInput.PullTransmission = Input.GetKey(KeyCode.Mouse1);
 
-		playerInput.Menu = Input.GetKeyDown(KeyCode.Escape);
-		playerInput.Select = Input.GetKeyDown(KeyCode.Space);
-		playerInput.Back = Input.GetKeyDown(KeyCode.Backspace);
+		var menuDown = Input.GetKey(KeyCode.Escape);
+		playerInput.Menu = !WasMenuDown && menuDown;
+		WasMenuDown = menuDown;
+
+		var selectDown = Input.GetKey(KeyCode.Space);
+		playerInput.Select = !WasSelectDown && selectDown;
+		WasSelectDown = selectDown;
+
+		var backDown = Input.GetKey(KeyCode.Backspace);
+		playerInput.Back = !WasBackDown && backDown;
+		WasBackDown = backDown;
 	}
 
 	private void UpdateControllerPlayerInputs(int playerID, InControl.InputDevice inputDevice)
