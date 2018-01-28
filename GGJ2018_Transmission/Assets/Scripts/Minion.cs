@@ -37,9 +37,9 @@ public class Minion : Entity
 	private void OnEnable()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
-		hp=startHealth;
-		damage=5;
-		healthbarCanvas.enabled=false;
+		hp = startHealth;
+		damage = 5;
+		healthbarCanvas.enabled = false;
 	}
 
 	private void Update()
@@ -59,7 +59,6 @@ public class Minion : Entity
 			rigidbody.velocity += bounceBack;
 			IgnoreMaxSpeedHack = IGNORE_MAX_SPEED_HACK_DURATION;
 			this.Attack((Minion)otherEntity);
-			Debug.Log("reached Attack");
 		}
 
 	}
@@ -77,12 +76,12 @@ public class Minion : Entity
 	private void UpdateMinion()
 	{
 		// Delete minion from scene if HP drops to/below zero
-		if (this.hp<=0){
-			Debug.Log("destroying minion");
+		if (this.hp <= 0)
+		{
 			Destroy(this.gameObject);
 		}
 
-		Debug.DrawLine(transform.position, transform.position + (Vector3)rigidbody.velocity);
+		//Debug.DrawLine(transform.position, transform.position + (Vector3)rigidbody.velocity);
 		if (IsAffectedByWave || AlwaysAffectedByWave)
 		{
 			var enemy = GetNearbyEnemyEntity();
@@ -111,15 +110,16 @@ public class Minion : Entity
 
 			IsAffectedByWave = false;
 			AffectedByPlayerIDs.Clear();
+			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! UNCOMMMMEMEMNT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//waveAffect = Vector2.zero;
 		}
 	}
 
 	private void Attack(Minion other)
 	{
-		other.hp-=damage;
-		other.healthbarCanvas.enabled=true;
-		other.healthbar.fillAmount = other.hp/startHealth;
+		other.hp -= damage;
+		other.healthbarCanvas.enabled = true;
+		other.healthbar.fillAmount = other.hp / startHealth;
 	}
 
 	private Entity GetNearbyEnemyEntity()
