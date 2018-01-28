@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 public Rigidbody2D rb;
 public float speed;
 public int playerID = 0;
-private int transmission = 0;
+private bool transmission;
 private PlayerInput playerInput;
 private int charge;
 void Awake()
@@ -15,6 +15,7 @@ void Awake()
      rb = GetComponent<Rigidbody2D>();
      GameManager.Instance.InitGameManager(this);
      charge=100;
+     transmission=false;
  }
 
 void Update()
@@ -26,41 +27,34 @@ void Update()
   var ray = new Vector3(playerInput.HorizontalAim, playerInput.VerticalAim, 0);
   //Debug.Log(ray);
 
-  if (transmission==1){
+  if (transmission){
     Debug.DrawRay(playerPosition, ray, Color.yellow, 5.0f, true);
     charge--;
   }
-  else if (transmission==2){
-    Debug.DrawRay(playerPosition, ray, Color.blue, 5.0f, true);
-    charge--;
-  }
-  else if (transmission==0 && charge<100){
+  else if (!transmission && charge<100){
     charge++;
   }
 
   Debug.Log("Charge: "+charge);
   //Debug.Log("Pull: "+playerInput.PullTransmission+", Push: "+playerInput.PushTransmission);
   HandleTransmission();
-  Debug.Log("Transmission set to: "+transmission);
+  Debug.Log("Transmission: "+transmission);
 }
 
 void HandleTransmission(){
   // currently nothing, switch to push
-  if (transmission==0 && playerInput.PushTransmission && charge>0 && Aiming()){
-    transmission=1;
+  if (!transmission && playerInput.PushTransmission && charge>0 && Aiming()){
+    transmission=true;
   }
   // currently nothing, switch to pull
-  else if (transmission==0 && playerInput.PullTransmission && charge>0 && Aiming()){
-    transmission=2;
+  else if (!transmission && playerInput.PullTransmission && charge>0 && Aiming()){
+    transmission=true;
   }
   else if (!playerInput.PushTransmission && !playerInput.PullTransmission && Aiming()){
-    transmission=0;
+    transmission=false;
   }
-  else if (transmission==1 && charge<=0){
-    transmission=0;
-  }
-  else if (transmission==2 && charge<=0){
-    transmission=0;
+  else if (transmission && charge<=0){
+    transmission=false;
   }
 }
 
