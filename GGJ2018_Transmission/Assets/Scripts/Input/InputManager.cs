@@ -18,6 +18,7 @@ public class PlayerInput
 
 	public bool Menu;
 	public bool Select;
+	public bool Back;
 
 	public Vector3 GetNormalizedAim(Vector3 originPoint, Camera screenCamera)
 	{
@@ -39,7 +40,8 @@ Aim: ({HorizontalAim}, {VerticalAim})
 Push: ({PushTransmission})
 Pull: ({PullTransmission})
 Menu: ({Menu})
-Select: ({Select})";
+Select: ({Select})
+Back: ({Back})";
 	}
 }
 
@@ -107,23 +109,6 @@ public class InputManager : MonoBehaviour
 		StartCoroutine(UpdateLoop());
 	}
 
-	private void FixedUpdate()
-	{
-		foreach (var inputDevice in InControl.InputManager.Devices)
-		{
-			if (!inputDevice.IsAttached || !inputDevice.IsKnown || !inputDevice.IsSupportedOnThisPlatform)
-				continue;
-
-			if (inputDevice.Command)
-			{
-				SetNextControllerPlayer(inputDevice);
-			}
-		}
-
-		if (Input.GetKey(KeyCode.Space))
-			SetNextKeyboardPlayer();
-	}
-
 	private void OnGUI()
 	{
 		const bool DEBUG_GUI = true;
@@ -149,7 +134,7 @@ Player 4:
 	{
 		while (true)
 		{
-			//Debug.Log("Updating things");
+			ListenForPlayers();
 			UpdatePlayerInputs();
 			yield return new WaitForEndOfFrame();
 		}
@@ -160,6 +145,12 @@ Player 4:
 	public static PlayerInput GetPlayerInput(int playerID)
 	{
 		return instance.playerInputs[playerID];
+	}
+
+	public static void DisconnectPlayerDevice(int playerID)
+	{
+		instance.playerDevices[playerID] = null;
+		instance.playerInputs[playerID] = new PlayerInput() { PlayerID = playerID };
 	}
 
 	private void ResetPlayerDevices()
@@ -225,6 +216,23 @@ Player 4:
 		}
 	}
 
+	public void ListenForPlayers()
+	{
+		foreach (var inputDevice in InControl.InputManager.Devices)
+		{
+			if (!inputDevice.IsAttached || !inputDevice.IsKnown || !inputDevice.IsSupportedOnThisPlatform)
+				continue;
+
+			if (inputDevice.Command)
+			{
+				SetNextControllerPlayer(inputDevice);
+			}
+		}
+
+		if (Input.GetKey(KeyCode.Space))
+			SetNextKeyboardPlayer();
+	}
+
 	private void UpdatePlayerInputs()
 	{
 		for (int i = 0; i < MAX_PLAYERS; i++)
@@ -258,8 +266,9 @@ Player 4:
 		playerInput.PushTransmission = Input.GetKey(KeyCode.Mouse0);
 		playerInput.PullTransmission = Input.GetKey(KeyCode.Mouse1);
 
-		playerInput.Menu = Input.GetKey(KeyCode.Escape);
-		playerInput.Select = Input.GetKey(KeyCode.Space);
+		playerInput.Menu = Input.GetKeyDown(KeyCode.Escape);
+		playerInput.Select = Input.GetKeyDown(KeyCode.Space);
+		playerInput.Back = Input.GetKeyDown(KeyCode.Backspace);
 	}
 
 	private void UpdateControllerPlayerInputs(int playerID, InControl.InputDevice inputDevice)
@@ -279,7 +288,8 @@ Player 4:
 		playerInput.PushTransmission = inputDevice.RightTrigger;
 		playerInput.PullTransmission = inputDevice.LeftTrigger;
 
-		playerInput.Menu = inputDevice.Command;
-		playerInput.Select = inputDevice.Action1;
+		playerInput.Menu = inputDevice.Command.WasPressed;
+		playerInput.Select = inputDevice.Action1.WasPressed;
+		playerInput.Back = inputDevice.Action2.WasPressed;
 	}
 }
