@@ -23,6 +23,9 @@ public class Minion : Entity
 	[SerializeField]
 	private Vector2 waveAffect;
 
+	[SerializeField]
+	private int hp;
+
 	private void OnEnable()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
