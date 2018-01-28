@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
 	// This is the single instance of the game manager
 	public static GameManager Instance { get; private set; }
 
+	public UnityEngine.Object PlayerAPrefab;
+	public UnityEngine.Object PlayerBPrefab;
+
 	// If true we are paused
 	public bool IsPaused { get; private set; }
 	public static bool IsGamePaused => Instance.IsPaused;
@@ -30,6 +33,16 @@ public class GameManager : MonoBehaviour
 	private List<Entity> TeamBEntities = new List<Entity>();
 
 	private int[] PlayerTeams = new int[4];
+
+	[SerializeField]
+	private List<Player> TeamAPlayers = new List<Player>();
+	[SerializeField]
+	private List<Player> TeamBPlayers = new List<Player>();
+
+	[SerializeField]
+	private List<PlayerSpawner> TeamASpawners = new List<PlayerSpawner>();
+	[SerializeField]
+	private List<PlayerSpawner> TeamBSpawners = new List<PlayerSpawner>();
 
 	// Awake is fired BEFORE Start
 	void Awake()
@@ -77,7 +90,7 @@ public class GameManager : MonoBehaviour
 				PlayerSelectScreen.SetBalanced(true);
 				if (PlayerSelectScreen.AnyPlayerConnected() && PlayerSelectScreen.AreAllPlayersReady())
 				{
-					// TODO: Prep game
+					SpawnPlayersCorrectly();
 
 					UnpauseGame();
 
@@ -97,6 +110,91 @@ public class GameManager : MonoBehaviour
 				ShowPlayerSelectScreen();
 
 				PauseGame();
+			}
+		}
+	}
+
+	public static void RespawnPlayer(Player deadPlayer)
+	{
+		if (deadPlayer.TeamID == 0) // Team A
+		{
+			foreach (var spawner in Instance.TeamASpawners)
+			{
+				if (!spawner.IsSpawning())
+				{
+					spawner.SpawnPlayer(deadPlayer);
+					return;
+				}
+			}
+		}
+		else // Team B
+		{
+			foreach (var spawner in Instance.TeamBSpawners)
+			{
+				if (!spawner.IsSpawning())
+				{
+					spawner.SpawnPlayer(deadPlayer);
+					return;
+				}
+			}
+		}
+	}
+
+	private void SpawnPlayersCorrectly()
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			var team = PlayerTeams[i];
+			Debug.Log($"Player team {team}");
+			switch (team)
+			{
+				// THIS IS THE WORST CODE I'VE EVER WRITTEN *CRYING EMOJI*
+				case -1: // Team A
+					if (TeamAPlayers.Exists(p => p.PlayerID == i))
+					{
+						// Already exists
+					}
+					else
+					{
+						// Create me
+						var newObj = (GameObject)Instantiate(PlayerAPrefab);
+						var objPlayer = newObj.GetComponent<Player>();
+						objPlayer.PlayerID = i;
+						TeamAPlayers.Add(objPlayer);
+					}
+
+					if (TeamBPlayers.Exists(p => p.PlayerID == i))
+					{
+						// Remove me
+						var objPlayer = TeamBPlayers.First(p => p.PlayerID == i);
+						TeamBPlayers.Remove(objPlayer);
+						Destroy(objPlayer.gameObject);
+					}
+					break;
+				case 1: // Team B
+					if (TeamBPlayers.Exists(p => p.PlayerID == i))
+					{
+						// Already exists
+					}
+					else
+					{
+						// Create me
+						var newObj = (GameObject)Instantiate(PlayerBPrefab);
+						var objPlayer = newObj.GetComponent<Player>();
+						objPlayer.PlayerID = i;
+						TeamBPlayers.Add(objPlayer);
+					}
+
+					if (TeamAPlayers.Exists(p => p.PlayerID == i))
+					{
+						// Remove me
+						var objPlayer = TeamAPlayers.First(p => p.PlayerID == i);
+						TeamAPlayers.Remove(objPlayer);
+						Destroy(objPlayer.gameObject);
+					}
+					break;
+				default:
+					break;
 			}
 		}
 	}
@@ -198,9 +296,13 @@ public class GameManager : MonoBehaviour
 	{
 		var teamAEntities = GameObject.FindGameObjectsWithTag("TeamAEntity").Select(go => go.GetComponent<Entity>());
 		var teamBEntities = GameObject.FindGameObjectsWithTag("TeamBEntity").Select(go => go.GetComponent<Entity>());
+		var teamASpawners = GameObject.FindGameObjectsWithTag("TeamASpawner").Select(go => go.GetComponent<PlayerSpawner>());
+		var teamBSpawners = GameObject.FindGameObjectsWithTag("TeamBSpawner").Select(go => go.GetComponent<PlayerSpawner>());
 
 		TeamAEntities.AddRange(teamAEntities);
 		TeamBEntities.AddRange(teamBEntities);
+		TeamASpawners.AddRange(teamASpawners);
+		TeamBSpawners.AddRange(teamBSpawners);
 	}
 
 	public static void AddEntity(Entity entity)

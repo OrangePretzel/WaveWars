@@ -7,7 +7,11 @@ public class Entity : MonoBehaviour
 	public const int TEAM_B_ID = 1;
 
 	public int TeamID { get { return teamID; } }
-	public int PlayerID { get { return playerID; } }
+	public int PlayerID
+	{
+		get { return playerID; }
+		set { playerID = value; }
+	}
 	public bool Reflective { get { return reflective; } }
 
 	public float maxHP;

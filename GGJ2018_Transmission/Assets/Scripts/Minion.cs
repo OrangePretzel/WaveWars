@@ -156,6 +156,7 @@ public class Minion : Entity
 		{
 			animator.SetBool("IsWalking", false);
 			animator.SetBool("IsAttacking", false);
+			rigidbody.velocity = Vector2.zero;
 		}
 	}
 
