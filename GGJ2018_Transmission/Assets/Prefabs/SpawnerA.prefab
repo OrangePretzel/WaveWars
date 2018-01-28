@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TEAM_ID: 0
-  spawnDelay: 15
+  spawnDelay: 10
   thingToSpawn: {fileID: 1738916633818034, guid: 69b48ce62b462ab43bb0e3a36e0127b9,
     type: 2}
   minions: {fileID: 0}

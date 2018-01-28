@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
 		for (int i = 0; i < 4; i++)
 		{
 			var team = PlayerTeams[i];
-			Debug.Log($"Player team {team}");
+
 			switch (team)
 			{
 				// THIS IS THE WORST CODE I'VE EVER WRITTEN *CRYING EMOJI*
