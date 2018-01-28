@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InControl;
+using System;
 using UnityEngine;
 
 public class PlayerInput
@@ -17,6 +18,13 @@ public class PlayerInput
 	public bool Menu;
 	public bool Select;
 
+	public Vector3 GetNormalizedAim(Vector3 originPoint, Camera screenCamera)
+	{
+		var aimVec = (screenCamera.ScreenToWorldPoint(new Vector3(HorizontalAim, VerticalAim)) - originPoint).normalized;
+		aimVec.z = 0;
+		return aimVec;
+	}
+
 	public override string ToString()
 	{
 		return $@"Player: ({PlayerID})
@@ -32,6 +40,12 @@ Select: ({Select})";
 
 public class InputManager : MonoBehaviour
 {
+	private class InputMode
+	{
+		public bool IsKeyboardAndMouse;
+		public InControl.InputDevice InputDevice;
+	}
+
 	#region Singleton
 
 	private static InputManager instance;
@@ -52,7 +66,7 @@ public class InputManager : MonoBehaviour
 
 	public static Action<int> OnResetPlayerDevices;
 
-	private InControl.InputDevice[] playerDevices = new InControl.InputDevice[MAX_PLAYERS];
+	private InputMode[] playerDevices = new InputMode[MAX_PLAYERS];
 	private PlayerInput[] playerInputs = new PlayerInput[MAX_PLAYERS];
 
 	#region Unity Hooks
@@ -69,7 +83,7 @@ public class InputManager : MonoBehaviour
 			bool needsReset = false;
 			foreach (var playerDevice in playerDevices)
 			{
-				if (playerDevice == inputDevice)
+				if (playerDevice?.InputDevice == inputDevice)
 				{
 					needsReset = true;
 					break;
@@ -93,9 +107,12 @@ public class InputManager : MonoBehaviour
 
 			if (inputDevice.Command)
 			{
-				SetNextPlayer(inputDevice);
+				SetNextControllerPlayer(inputDevice);
 			}
 		}
+
+		if (Input.GetKey(KeyCode.Space))
+			SetNextKeyboardPlayer();
 	}
 
 	private void Update()
@@ -146,14 +163,38 @@ Player 4:
 		OnResetPlayerDevices?.Invoke(numberOfOldDevices);
 	}
 
-	private void SetNextPlayer(InControl.InputDevice inputDevice)
+	private void SetNextKeyboardPlayer()
 	{
 		const int INVALID = -1;
 		int potentialPlayerID = INVALID;
 
 		for (int i = 0; i < MAX_PLAYERS; i++)
 		{
-			if (playerDevices[i] == inputDevice)
+			if (playerDevices[i]?.IsKeyboardAndMouse ?? false)
+				return;
+			else if (playerDevices[i] == null && potentialPlayerID == INVALID)
+				potentialPlayerID = i;
+		}
+
+		if (potentialPlayerID != INVALID)
+		{
+			Debug.Log($"Player {potentialPlayerID + 1} controller set to Keyboard and Mouse");
+			playerDevices[potentialPlayerID] = new InputMode()
+			{
+				IsKeyboardAndMouse = true,
+				InputDevice = null
+			};
+		}
+	}
+
+	private void SetNextControllerPlayer(InputDevice inputDevice)
+	{
+		const int INVALID = -1;
+		int potentialPlayerID = INVALID;
+
+		for (int i = 0; i < MAX_PLAYERS; i++)
+		{
+			if (playerDevices[i]?.InputDevice == inputDevice)
 				return;
 			else if (playerDevices[i] == null && potentialPlayerID == INVALID)
 				potentialPlayerID = i;
@@ -162,7 +203,11 @@ Player 4:
 		if (potentialPlayerID != INVALID)
 		{
 			Debug.Log($"Player {potentialPlayerID + 1} controller set to {inputDevice.Name}");
-			playerDevices[potentialPlayerID] = inputDevice;
+			playerDevices[potentialPlayerID] = new InputMode()
+			{
+				IsKeyboardAndMouse = false,
+				InputDevice = inputDevice
+			};
 		}
 	}
 
@@ -170,24 +215,57 @@ Player 4:
 	{
 		for (int i = 0; i < MAX_PLAYERS; i++)
 		{
-			var inputDevice = playerDevices[i];
-			if (inputDevice == null)
+			var inputMode = playerDevices[i];
+			if (inputMode == null)
 				continue;
 
-			var playerInput = playerInputs[i];
-			playerInput.PlayerDevice = inputDevice.Name;
-
-			playerInput.HorizontalMovement = inputDevice.LeftStick.X;
-			playerInput.VerticalMovement = inputDevice.LeftStick.Y;
-
-			playerInput.HorizontalAim = inputDevice.RightStick.X;
-			playerInput.VerticalAim = inputDevice.RightStick.Y;
-
-			playerInput.PushTransmission = inputDevice.RightTrigger;
-			playerInput.PullTransmission = inputDevice.LeftTrigger;
-
-			playerInput.Menu = inputDevice.Command;
-			playerInput.Select = inputDevice.Action1;
+			if (inputMode.IsKeyboardAndMouse)
+				UpdateKeyboardAndMousePlayerInputs(i);
+			else
+				UpdateControllerPlayerInputs(i, inputMode.InputDevice);
 		}
+	}
+
+	private void UpdateKeyboardAndMousePlayerInputs(int playerID)
+	{
+		var playerInput = playerInputs[playerID];
+		playerInput.PlayerDevice = "Keyboard & Mouse";
+
+		playerInput.HorizontalMovement =
+			Input.GetKey(KeyCode.A) ? -1 : 0 +
+			(Input.GetKey(KeyCode.D) ? 1 : 0);
+		playerInput.VerticalMovement =
+			Input.GetKey(KeyCode.S) ? -1 : 0 +
+			(Input.GetKey(KeyCode.W) ? 1 : 0);
+
+		playerInput.HorizontalAim = Input.mousePosition.x;
+		playerInput.VerticalAim = Input.mousePosition.y;
+
+		playerInput.PushTransmission = Input.GetKey(KeyCode.Mouse0);
+		playerInput.PullTransmission = Input.GetKey(KeyCode.Mouse1);
+
+		playerInput.Menu = Input.GetKey(KeyCode.Escape);
+		playerInput.Select = Input.GetKey(KeyCode.Space);
+	}
+
+	private void UpdateControllerPlayerInputs(int playerID, InControl.InputDevice inputDevice)
+	{
+		if (inputDevice == null)
+			return;
+
+		var playerInput = playerInputs[playerID];
+		playerInput.PlayerDevice = inputDevice.Name;
+
+		playerInput.HorizontalMovement = inputDevice.LeftStick.X;
+		playerInput.VerticalMovement = inputDevice.LeftStick.Y;
+
+		playerInput.HorizontalAim = inputDevice.RightStick.X;
+		playerInput.VerticalAim = inputDevice.RightStick.Y;
+
+		playerInput.PushTransmission = inputDevice.RightTrigger;
+		playerInput.PullTransmission = inputDevice.LeftTrigger;
+
+		playerInput.Menu = inputDevice.Command;
+		playerInput.Select = inputDevice.Action1;
 	}
 }
