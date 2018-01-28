@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class PlayerSelectScreen : MonoBehaviour
 {
 	private Canvas canvas;
+	public Canvas BalancedTeams;
 
 	public float TeamOffset = 1;
 	public float TransitionSpeed = 5;
@@ -17,11 +18,6 @@ public class PlayerSelectScreen : MonoBehaviour
 	private void Awake()
 	{
 		canvas = GetComponent<Canvas>();
-	}
-
-	private void FixedUpdate()
-	{
-		Debug.Log($"Equal to to {canvas.enabled}");
 	}
 
 	public void AssignPlayerToTeam(int playerID, int teamID)
@@ -86,6 +82,10 @@ public class PlayerSelectScreen : MonoBehaviour
 		}
 	}
 
+	public void SetBalanced(bool isBalanced)
+	{
+		BalancedTeams.enabled = !isBalanced;
+	}
 	public void ToggleScreen(bool toggle)
 	{
 		canvas.enabled = toggle;
