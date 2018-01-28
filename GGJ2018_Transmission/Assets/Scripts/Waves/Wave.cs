@@ -61,8 +61,8 @@ public class Wave : Entity
                 if (Vector3.Dot(v.normalized, transform.up) > cosHalfAngle)
                 {
                     var hit = Physics2D.Raycast(transform.position, v.normalized, wavePower, collisionLayer.value);
-                    Debug.Log(hit.collider);
-                    Debug.DrawRay(transform.position, v.normalized * hit.distance);
+                    //Debug.Log(hit.collider);
+                    //Debug.DrawRay(transform.position, v.normalized * hit.distance);
                     if (!hit.collider || v.magnitude < hit.distance)
                     {
                         var minion = friend as Minion;
