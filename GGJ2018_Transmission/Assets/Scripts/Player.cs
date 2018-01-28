@@ -24,7 +24,6 @@ public class Player : MonoBehaviour
 		rb.MovePosition(rb.position + rb.velocity * Time.deltaTime);
 		var playerPosition = this.transform.position;
 		var ray = new Vector3(aimVec.x, aimVec.y, 0);
-		Debug.Log(ray);
 
 		if (transmission == 1)
 		{
@@ -37,7 +36,6 @@ public class Player : MonoBehaviour
 
 		//Debug.Log("Pull: "+playerInput.PullTransmission+", Push: "+playerInput.PushTransmission);
 		HandleTransmission();
-		Debug.Log("Transmission set to: " + transmission);
 	}
 
 	void HandleTransmission()
