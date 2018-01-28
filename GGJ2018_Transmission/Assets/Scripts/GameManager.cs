@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 	public static GameManager Instance { get; private set; }
 
 	public UnityEngine.Object PlayerAPrefab;
+
 	public UnityEngine.Object PlayerBPrefab;
 
 	// If true we are paused
@@ -98,12 +99,17 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
+		else if (IsInMenu)
+		{
+			// blah
+		}
 		else
 		{
 
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
 				TogglePause();
+				ShowMenuScreen();
 			}
 
 			if (PlayerCount == 0)
@@ -377,17 +383,42 @@ public class GameManager : MonoBehaviour
 	public bool IsInPlayerSelection;
 	public PlayerSelectScreen PlayerSelectScreen;
 
-	private void ShowPlayerSelectScreen()
+	public void ShowPlayerSelectScreen()
 	{
 		IsInPlayerSelection = true;
 
 		PlayerSelectScreen.ToggleScreen(true);
 	}
 
-	private void HidePlayerSelectScreen()
+	public void HidePlayerSelectScreen()
 	{
 		IsInPlayerSelection = false;
 
 		PlayerSelectScreen.ToggleScreen(false);
+	}
+
+	public bool IsInMenu;
+	public MenuScreen MenuScreen;
+
+	public void ShowMenuScreen()
+	{
+		IsInMenu = true;
+
+		MenuScreen.ToggleScreen(true);
+	}
+
+	public void HideMenuScreen()
+	{
+		IsInMenu = false;
+
+		MenuScreen.ToggleScreen(false);
+	}
+
+	public static void QuickResetPlayers()
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			Instance.PlayerSelectScreen.MakePlayerReady(i, false);
+		}
 	}
 }
