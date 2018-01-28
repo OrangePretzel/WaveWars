@@ -75,11 +75,11 @@ public class Wave : Entity
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        /*if (Input.GetKeyDown(KeyCode.E))
         {
             Disengage();
             CreateWavelets();
-        }
+        }*/
     }
 
     public void UpdateWaveAngle(int newAngle)

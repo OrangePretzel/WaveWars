@@ -62,6 +62,9 @@ public class Wavelet: MonoBehaviour
 
     void Update()
     {
+        if (GameManager.IsGamePaused)
+            return;
+
         phase += speed * Time.deltaTime;
 
         var hit = Physics2D.Raycast(transform.position, transform.up, wavePower, collisionLayer.value);
@@ -91,11 +94,7 @@ public class Wavelet: MonoBehaviour
             phase = phase - 1.0f;
         }
 
-        if (length < maxLength)
-        {
-            uvs[2].y = 1 + leftover;
-            uvs[3].y = 1 + leftover;
-        }
+
         uvs[2].y = 1 + leftover - (phase * waveDensity);
         uvs[3].y = 1 + leftover - (phase * waveDensity);
         uvs[0].y = 1 - tiling - (phase * waveDensity);

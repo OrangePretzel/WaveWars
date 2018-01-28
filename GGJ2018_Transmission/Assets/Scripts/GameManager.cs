@@ -102,6 +102,18 @@ public class GameManager : MonoBehaviour
 		TeamBEntities.AddRange(teamBEntities);
 	}
 
+	public static void AddEntity(Entity entity)
+	{
+		if (entity.TeamID == Entity.TEAM_A_ID)
+		{
+			Instance.TeamAEntities.Add(entity);
+		}
+		else if (entity.TeamID == Entity.TEAM_B_ID)
+		{
+			Instance.TeamBEntities.Add(entity);
+		}
+	}
+
 	public static void RemoveEntity(Entity entity)
 	{
 		Instance.TeamAEntities.Remove(entity);
