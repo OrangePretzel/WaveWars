@@ -100,6 +100,8 @@ public class Minion : Entity
 			AffectedByPlayerIDs.Clear();
 			//waveAffect = Vector2.zero;
 		}
+
+		// Delete minion from scene if HP drops to/below zero
 		if (hp<=0){
 			Destroy(this.gameObject);
 		}
