@@ -109,8 +109,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveletPrefab: {fileID: 114002539641690498, guid: 9e83eeeb14fa3dc48a88562be04d5844,
     type: 2}
-  wavePower: 10
+  wavePower: 3
+  speed: 2
+  density: 3
+  angle: 18
+  numWavelets: 13
+  distToWaveletSpawn: 0.2
   wavelets: []
-  angle: 30
-  numWavelets: 5
-  distToWaveletSpawn: 0.5

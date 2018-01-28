@@ -92,7 +92,7 @@ BoxCollider:
   m_GameObject: {fileID: 1076063797716810}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -107,13 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09ce2e02862f254f81f426455126824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wavePower: 3.5
-  maxLength: 0
-  length: 0
-  speed: 2
-  scrollSpeed: -0.1
-  waveDensity: 2
-  angle: 8
-  baseWidth: 0.2
   vertices: []
   uvs: []
+  wavefrontOffset: 0
+  leftover: 0
