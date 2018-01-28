@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 	public static bool IsGamePaused => Instance.IsPaused;
 
 	[SerializeField]
-	private GameSettings gameSettings;
+	private GameSettings gameSettings = new GameSettings();
 	public static GameSettings GameSettings { get { return Instance.gameSettings; } }
 
 	private int PlayerCount = 0;
@@ -55,7 +55,26 @@ public class GameManager : MonoBehaviour
 	{
 		if (IsInPlayerSelection)
 		{
+			int playerCount = 0;
+			for (int i = 0; i < 4; i++)
+			{
+				var input = InputManager.GetPlayerInput(i);
+				if (input.PlayerDevice != null)
+					playerCount++;
+				HandleSinglePlayerInputForPlayerSelectionScreen(i, input);
+			}
+			PlayerCount = playerCount;
 
+			if (PlayerSelectScreen.AnyPlayerConnected() && PlayerSelectScreen.AreAllPlayersReady())
+			{
+				Debug.Log("Ready!");
+
+				// TODO: Prep game
+
+				UnpauseGame();
+
+				HidePlayerSelectScreen();
+			}
 		}
 		else
 		{
@@ -71,6 +90,41 @@ public class GameManager : MonoBehaviour
 				ShowPlayerSelectScreen();
 
 				PauseGame();
+			}
+		}
+	}
+
+	private void HandleSinglePlayerInputForPlayerSelectionScreen(int i, PlayerInput input)
+	{
+		if (input.PlayerDevice == null)
+		{
+			PlayerSelectScreen.UnAssignPlayerFromTeams(i);
+			PlayerSelectScreen.SetPlayerEnabled(i, false);
+		}
+		else
+		{
+			PlayerSelectScreen.SetPlayerEnabled(i, true);
+			if (input.Select)
+			{
+				PlayerSelectScreen.MakePlayerReady(i, true);
+			}
+
+			if (input.Back)
+			{
+				if (PlayerSelectScreen.IsPlayerReady(i))
+				{
+					PlayerSelectScreen.MakePlayerReady(i, false);
+				}
+				else
+				{
+					PlayerSelectScreen.SetPlayerEnabled(i, false);
+					InputManager.DisconnectPlayerDevice(i);
+				}
+			}
+
+			if (input.HorizontalMovement != 0 && !PlayerSelectScreen.IsPlayerReady(i))
+			{
+				PlayerSelectScreen.AssignPlayerToTeam(i, ((int)Mathf.Sign(input.HorizontalMovement) + 1) / 2);
 			}
 		}
 	}
@@ -168,12 +222,19 @@ public class GameManager : MonoBehaviour
 	#endregion
 
 	public bool IsInPlayerSelection;
-	public Canvas PlayerSelectScreen;
+	public PlayerSelectScreen PlayerSelectScreen;
 
 	private void ShowPlayerSelectScreen()
 	{
 		IsInPlayerSelection = true;
 
-		PlayerSelectScreen.enabled = true;
+		PlayerSelectScreen.ToggleScreen(true);
+	}
+
+	private void HidePlayerSelectScreen()
+	{
+		IsInPlayerSelection = false;
+
+		PlayerSelectScreen.ToggleScreen(false);
 	}
 }
