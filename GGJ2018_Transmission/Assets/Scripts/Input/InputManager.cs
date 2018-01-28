@@ -20,7 +20,7 @@ public class PlayerInput
 
 	public Vector3 GetNormalizedAim(Vector3 originPoint, Camera screenCamera)
 	{
-		var aimVec = (originPoint - screenCamera.ScreenToWorldPoint(new Vector3(HorizontalAim, VerticalAim))).normalized;
+		var aimVec = (screenCamera.ScreenToWorldPoint(new Vector3(HorizontalAim, VerticalAim)) - originPoint).normalized;
 		aimVec.z = 0;
 		return aimVec;
 	}
