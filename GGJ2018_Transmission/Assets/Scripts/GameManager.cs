@@ -77,8 +77,6 @@ public class GameManager : MonoBehaviour
 				PlayerSelectScreen.SetBalanced(true);
 				if (PlayerSelectScreen.AnyPlayerConnected() && PlayerSelectScreen.AreAllPlayersReady())
 				{
-					Debug.Log("Ready!");
-
 					// TODO: Prep game
 
 					UnpauseGame();
@@ -96,8 +94,6 @@ public class GameManager : MonoBehaviour
 
 			if (PlayerCount == 0)
 			{
-				Debug.Log("No Players Connected!");
-
 				ShowPlayerSelectScreen();
 
 				PauseGame();
@@ -116,9 +112,6 @@ public class GameManager : MonoBehaviour
 			else if (PlayerTeams[i] == 1)
 				teamBCount++;
 		}
-
-		Debug.Log($"1: {PlayerTeams[0]}, 1: {PlayerTeams[1]}, 1: {PlayerTeams[2]}, 1: {PlayerTeams[3]}");
-		Debug.Log($"A: {teamACount}, B: {teamBCount}");
 
 		if (Mathf.Abs(teamACount - teamBCount) > 1)
 		{
@@ -245,7 +238,7 @@ public class GameManager : MonoBehaviour
 	public void PauseGame()
 	{
 		// Pause the game
-		Time.timeScale = 0;
+		//Time.timeScale = 0;
 		IsPaused = true;
 	}
 
@@ -253,7 +246,7 @@ public class GameManager : MonoBehaviour
 	public void UnpauseGame()
 	{
 		// Unpause the game
-		Time.timeScale = 1;
+		//Time.timeScale = 1;
 		IsPaused = false;
 	}
 

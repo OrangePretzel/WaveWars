@@ -20,11 +20,6 @@ public class PlayerSelectScreen : MonoBehaviour
 		canvas = GetComponent<Canvas>();
 	}
 
-	private void FixedUpdate()
-	{
-		Debug.Log($"Equal to to {canvas.enabled}");
-	}
-
 	public void AssignPlayerToTeam(int playerID, int teamID)
 	{
 		PlayerIconTargetLocation[playerID] = teamID == Entity.TEAM_A_ID ? -1 : 1;
