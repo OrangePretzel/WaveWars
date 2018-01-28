@@ -20,6 +20,9 @@ public class PlayerInput
 
 	public Vector3 GetNormalizedAim(Vector3 originPoint, Camera screenCamera)
 	{
+		if (PlayerDevice != InputManager.KEYBOARD_AND_MOUSE)
+			return new Vector3(HorizontalAim, VerticalAim).normalized;
+
 		var aimVec = (screenCamera.ScreenToWorldPoint(new Vector3(HorizontalAim, VerticalAim)) - originPoint).normalized;
 		aimVec.z = 0;
 		return aimVec;
@@ -40,6 +43,8 @@ Select: ({Select})";
 
 public class InputManager : MonoBehaviour
 {
+	public const string KEYBOARD_AND_MOUSE = "Keyboard and Mouse";
+
 	private class InputMode
 	{
 		public bool IsKeyboardAndMouse;
@@ -229,7 +234,7 @@ Player 4:
 	private void UpdateKeyboardAndMousePlayerInputs(int playerID)
 	{
 		var playerInput = playerInputs[playerID];
-		playerInput.PlayerDevice = "Keyboard & Mouse";
+		playerInput.PlayerDevice = InputManager.KEYBOARD_AND_MOUSE;
 
 		playerInput.HorizontalMovement =
 			Input.GetKey(KeyCode.A) ? -1 : 0 +
