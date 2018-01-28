@@ -32,7 +32,7 @@ public class Minion : Entity
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
 		hp=100;
-		damage=10;
+		damage=5;
 	}
 
 	private void Update()
@@ -69,6 +69,12 @@ public class Minion : Entity
 
 	private void UpdateMinion()
 	{
+		// Delete minion from scene if HP drops to/below zero
+		if (this.hp<=0){
+			Debug.Log("destroying minion");
+			Destroy(this.gameObject);
+		}
+
 		Debug.DrawLine(transform.position, transform.position + (Vector3)rigidbody.velocity);
 		if (IsAffectedByWave || AlwaysAffectedByWave)
 		{
@@ -99,11 +105,6 @@ public class Minion : Entity
 			IsAffectedByWave = false;
 			AffectedByPlayerIDs.Clear();
 			//waveAffect = Vector2.zero;
-		}
-
-		// Delete minion from scene if HP drops to/below zero
-		if (hp<=0){
-			Destroy(this.gameObject);
 		}
 	}
 
