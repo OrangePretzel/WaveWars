@@ -14,6 +14,8 @@ public class Minion : Entity
 
 	public float CollisionBounceMultiplier = 2;
 
+	public bool AlwaysAffectedByWave = false;
+
 	public bool IsAffectedByWave = false;
 	private List<int> AffectedByPlayerIDs = new List<int>();
 
@@ -60,8 +62,8 @@ public class Minion : Entity
 
 	private void UpdateMinion()
 	{
-			Debug.DrawLine(transform.position, transform.position + (Vector3)rigidbody.velocity);
-		if (IsAffectedByWave)
+		Debug.DrawLine(transform.position, transform.position + (Vector3)rigidbody.velocity);
+		if (IsAffectedByWave || AlwaysAffectedByWave)
 		{
 			// Velocity Debug Line
 
