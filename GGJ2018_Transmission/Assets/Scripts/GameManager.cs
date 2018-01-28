@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
 						var objPlayer = newObj.GetComponent<Player>();
 						objPlayer.PlayerID = i;
 						TeamAPlayers.Add(objPlayer);
-						RespawnPlayer(objPlayer);
+						RespawnPlayer(objPlayer, true);
 					}
 
 					if (TeamBPlayers.Exists(p => p.PlayerID == i))
@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour
 						var objPlayer = newObj.GetComponent<Player>();
 						objPlayer.PlayerID = i;
 						TeamBPlayers.Add(objPlayer);
-						RespawnPlayer(objPlayer);
+						RespawnPlayer(objPlayer, true);
 					}
 
 					if (TeamAPlayers.Exists(p => p.PlayerID == i))
@@ -198,6 +198,20 @@ public class GameManager : MonoBehaviour
 					}
 					break;
 				default:
+					if (TeamAPlayers.Exists(p => p.PlayerID == i))
+					{
+						// Remove me
+						var objPlayer = TeamAPlayers.First(p => p.PlayerID == i);
+						TeamAPlayers.Remove(objPlayer);
+						Destroy(objPlayer.gameObject);
+					}
+					if (TeamBPlayers.Exists(p => p.PlayerID == i))
+					{
+						// Remove me
+						var objPlayer = TeamBPlayers.First(p => p.PlayerID == i);
+						TeamBPlayers.Remove(objPlayer);
+						Destroy(objPlayer.gameObject);
+					}
 					break;
 			}
 		}
