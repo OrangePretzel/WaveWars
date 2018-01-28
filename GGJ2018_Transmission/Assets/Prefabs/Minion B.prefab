@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4924017467982760}
   - component: {fileID: 212844869038631982}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: minion_leg_l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4383175586674712}
   - component: {fileID: 95962970643438496}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: p2minion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4797631982831352}
   - component: {fileID: 212198866576012192}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: minion_arm_r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4748820021812652}
   - component: {fileID: 212242557910322590}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: minion_arm_l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 223943837164248994}
   - component: {fileID: 114847964547847582}
   - component: {fileID: 114872125469438258}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: HUDCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4299027801752794}
   - component: {fileID: 212047259501552424}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: minion_weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4567622067098382}
   - component: {fileID: 212889658315343166}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: eye_l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 224442203732822960}
   - component: {fileID: 222419100723599446}
   - component: {fileID: 114162156939078508}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: HealthBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4677184952439792}
   - component: {fileID: 212174279043090148}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: minion_leg_r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4406320510608714}
   - component: {fileID: 212971511254423958}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: minion_face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4197910507099580}
   - component: {fileID: 212259569091458068}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: eye_r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4732335140383756}
   - component: {fileID: 212839803766559328}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: minion_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 224512401568485958}
   - component: {fileID: 222143961420943242}
   - component: {fileID: 114118578860349410}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: healthbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
