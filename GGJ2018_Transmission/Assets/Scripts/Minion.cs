@@ -33,6 +33,7 @@ public class Minion : Entity
 
 	public Canvas healthbarCanvas;
 	public Image healthbar;
+	public ParticleSystem deathParticles;
 
 	private void OnEnable()
 	{
@@ -108,6 +109,7 @@ public class Minion : Entity
 		// Delete minion from scene if HP drops to/below zero
 		if (this.hp <= 0)
 		{
+			Instantiate(deathParticles, transform.position, new Quaternion());
 			GameManager.RemoveEntity(this);
 			Destroy(this.gameObject);
 		}
