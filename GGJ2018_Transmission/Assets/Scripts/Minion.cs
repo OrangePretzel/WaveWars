@@ -64,6 +64,7 @@ public class Minion : Entity
 			rigidbody.velocity += bounceBack;
 			IgnoreMaxSpeedHack = IGNORE_MAX_SPEED_HACK_DURATION;
 			this.Attack((Minion)otherEntity);
+			graphic.transform.localScale = new Vector3(Mathf.Sign(-bounceBack.x) * graphicInitialScaleX, graphic.transform.localScale.y, 1);
 		}
 
 	}
@@ -102,13 +103,13 @@ public class Minion : Entity
 
 			}
 
-			graphic.transform.localScale = new Vector3(Mathf.Sign(rigidbody.velocity.x) * graphicInitialScaleX, graphic.transform.localScale.y, 1);
-
 			if (IgnoreMaxSpeedHack > 0)
 			{
 				IgnoreMaxSpeedHack -= Time.deltaTime;
 				return;
 			}
+
+			graphic.transform.localScale = new Vector3(Mathf.Sign(rigidbody.velocity.x) * graphicInitialScaleX, graphic.transform.localScale.y, 1);
 
 			// Cap the speed to max speed
 			if (rigidbody.velocity.sqrMagnitude > MaxSpeedSqr)

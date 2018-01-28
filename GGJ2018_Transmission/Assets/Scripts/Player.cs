@@ -43,8 +43,8 @@ public class Player : MonoBehaviour
 		{
 			charge -= Time.deltaTime;
 
-			Vector3 ray = new Vector3(playerInput.HorizontalAim, playerInput.VerticalAim, 0);
-			Debug.DrawRay(playerPosition, ray, Color.yellow, 5.0f, true);
+			ShootTransmission(new Vector3(playerInput.HorizontalAim, playerInput.VerticalAim, 0));
+			Debug.DrawRay(playerPosition, new Vector3(playerInput.HorizontalAim, playerInput.VerticalAim, 0), Color.yellow, 5.0f, true);
 		}
 
 		if (!isTransmitting && charge < MaxCharge)
@@ -53,5 +53,10 @@ public class Player : MonoBehaviour
 			if (charge >= MaxCharge)
 				charge = MaxCharge;
 		}
+	}
+
+	private void ShootTransmission(Vector3 direction)
+	{
+
 	}
 }

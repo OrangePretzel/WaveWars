@@ -421,12 +421,12 @@ Prefab:
     - target: {fileID: 114775481118280482, guid: 69b48ce62b462ab43bb0e3a36e0127b9,
         type: 2}
       propertyPath: AlwaysAffectedByWave
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114775481118280482, guid: 69b48ce62b462ab43bb0e3a36e0127b9,
         type: 2}
       propertyPath: waveAffect.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1738916633818034, guid: 69b48ce62b462ab43bb0e3a36e0127b9, type: 2}
       propertyPath: m_Name
@@ -707,12 +707,12 @@ Prefab:
     - target: {fileID: 114187370340929616, guid: b0ffcce1678f5b0419e9d0657ac455a2,
         type: 2}
       propertyPath: AlwaysAffectedByWave
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114187370340929616, guid: b0ffcce1678f5b0419e9d0657ac455a2,
         type: 2}
       propertyPath: waveAffect.x
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b0ffcce1678f5b0419e9d0657ac455a2, type: 2}
@@ -892,12 +892,12 @@ Prefab:
     - target: {fileID: 114187370340929616, guid: b0ffcce1678f5b0419e9d0657ac455a2,
         type: 2}
       propertyPath: AlwaysAffectedByWave
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114187370340929616, guid: b0ffcce1678f5b0419e9d0657ac455a2,
         type: 2}
       propertyPath: waveAffect.x
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1751939360947030, guid: b0ffcce1678f5b0419e9d0657ac455a2, type: 2}
       propertyPath: m_Name
@@ -1022,12 +1022,12 @@ Prefab:
     - target: {fileID: 114187370340929616, guid: b0ffcce1678f5b0419e9d0657ac455a2,
         type: 2}
       propertyPath: AlwaysAffectedByWave
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114187370340929616, guid: b0ffcce1678f5b0419e9d0657ac455a2,
         type: 2}
       propertyPath: waveAffect.x
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1751939360947030, guid: b0ffcce1678f5b0419e9d0657ac455a2, type: 2}
       propertyPath: m_Name
@@ -1425,12 +1425,12 @@ Prefab:
     - target: {fileID: 114775481118280482, guid: 69b48ce62b462ab43bb0e3a36e0127b9,
         type: 2}
       propertyPath: AlwaysAffectedByWave
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114775481118280482, guid: 69b48ce62b462ab43bb0e3a36e0127b9,
         type: 2}
       propertyPath: waveAffect.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1738916633818034, guid: 69b48ce62b462ab43bb0e3a36e0127b9, type: 2}
       propertyPath: m_Name
@@ -1656,12 +1656,12 @@ Prefab:
     - target: {fileID: 114775481118280482, guid: 69b48ce62b462ab43bb0e3a36e0127b9,
         type: 2}
       propertyPath: AlwaysAffectedByWave
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114775481118280482, guid: 69b48ce62b462ab43bb0e3a36e0127b9,
         type: 2}
       propertyPath: waveAffect.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 69b48ce62b462ab43bb0e3a36e0127b9, type: 2}
