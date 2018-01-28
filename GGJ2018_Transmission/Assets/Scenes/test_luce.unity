@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 25620718}
   - component: {fileID: 25620719}
+  - component: {fileID: 25620720}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -155,6 +156,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIHelper: {fileID: 0}
   IsPaused: 0
+--- !u!114 &25620720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 25620717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb16c0380a934e54390b97f155ab53bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InputManager: {fileID: 1237038579}
 --- !u!1 &46596711
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,9 +355,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca0f24440572544e49c69846ec4d5654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputManager: {fileID: 1237038579}
   rb: {fileID: 575559226}
   speed: 5
+  playerID: 0
 --- !u!1 &726482612
 GameObject:
   m_ObjectHideFlags: 0
