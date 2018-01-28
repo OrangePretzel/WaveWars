@@ -1,0 +1,256 @@
+fileFormatVersion: 2
+guid: 20402f10544693e4cb6e89ef1f2f7b54
+timeCreated: 1517104636
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: minion_0
+    21300002: minion_2
+    21300004: minion_3
+    21300006: minion_1
+    21300008: minion_4
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 146, z: 271, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: 0
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: minion_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 131
+        width: 236
+        height: 381
+      alignment: 9
+      pivot: {x: 0.52, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: minion_2
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 225
+        width: 59
+        height: 280
+      alignment: 9
+      pivot: {x: 0.51, y: 0.03}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: minion_3
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 0
+        width: 249
+        height: 185
+      alignment: 9
+      pivot: {x: 0.6, y: 0.54}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: minion_1
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 349
+        width: 75
+        height: 163
+      alignment: 9
+      pivot: {x: 0.46, y: 0.75}
+      border: {x: 0, y: 0, z: 1, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: minion_4
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 309
+        width: 96
+        height: 203
+      alignment: 9
+      pivot: {x: 0.5, y: 0.76}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline:
+    - - {x: 189, y: -69}
+      - {x: 136, y: -90}
+      - {x: 92, y: -69}
+      - {x: 51, y: -69}
+      - {x: 1, y: -80}
+      - {x: -6, y: -98}
+      - {x: -6, y: -139}
+      - {x: 5, y: -171}
+      - {x: 89, y: -245}
+      - {x: 95, y: -256}
+      - {x: 190, y: -256}
+      - {x: 247, y: -139}
+      - {x: 247, y: -93}
+      - {x: 227, y: -69}
+    - - {x: -18, y: -22}
+      - {x: -18, y: 40}
+      - {x: -25, y: 94}
+      - {x: -49, y: 198}
+      - {x: -58, y: 211}
+      - {x: -94, y: 248}
+      - {x: -110, y: 256}
+      - {x: -173, y: 256}
+      - {x: -206, y: 249}
+      - {x: -244, y: 191}
+      - {x: -256, y: 123}
+      - {x: -256, y: 5}
+      - {x: -254, y: -33}
+      - {x: -232, y: -97}
+      - {x: -177, y: -127}
+      - {x: -107, y: -127}
+      - {x: -61, y: -114}
+      - {x: -28, y: -70}
+      - {x: -20, y: -48}
+    - - {x: 248, y: 234}
+      - {x: 247, y: 247}
+      - {x: 229, y: 251}
+      - {x: 197, y: 251}
+      - {x: 185, y: 232}
+      - {x: 185, y: 147}
+      - {x: 187, y: 104}
+      - {x: 189, y: -22}
+      - {x: 208, y: -33}
+      - {x: 225, y: -33}
+      - {x: 233, y: -31}
+      - {x: 241, y: -19}
+      - {x: 245, y: 128}
+      - {x: 248, y: 158}
+    - - {x: 236, y: -28}
+      - {x: 238, y: -31}
+      - {x: 241, y: -31}
+      - {x: 245, y: -28}
+      - {x: 245, y: -23}
+      - {x: 244, y: -21}
+      - {x: 241, y: -21}
+      - {x: 236, y: -24}
+    - - {x: 153, y: 256}
+      - {x: 13, y: 256}
+      - {x: 6, y: 252}
+      - {x: -2, y: 245}
+      - {x: -2, y: 161}
+      - {x: 12, y: 97}
+      - {x: 38, y: 94}
+      - {x: 54, y: 103}
+      - {x: 73, y: 186}
+      - {x: 108, y: 60}
+      - {x: 137, y: 60}
+      - {x: 155, y: 67}
+      - {x: 171, y: 144}
+      - {x: 171, y: 246}
+    - - {x: 21, y: 101}
+      - {x: 24, y: 102}
+      - {x: 24, y: 105}
+      - {x: 21, y: 106}
+      - {x: 19, y: 104}
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
