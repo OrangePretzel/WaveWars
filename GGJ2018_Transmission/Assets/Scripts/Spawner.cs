@@ -3,17 +3,19 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
   public float spawnDelay = 5;
-  private Vector3 spawnerPos;
+  public GameObject thingToSpawn;
 
   void Awake(){
-    spawnerPos = this.transform.position;
+    InvokeRepeating ("Spawn", spawnDelay, spawnDelay);
   }
 
   void Update(){
-    
+
   }
 
-  void Spawn(Entity e){
+  void Spawn(){
     // spawn anything
+    Instantiate(thingToSpawn, this.transform);
+    Debug.Log("Spawn called");
   }
 }

@@ -118,9 +118,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca0f24440572544e49c69846ec4d5654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
+  rigidbody: {fileID: 0}
   speed: 5
   playerID: 0
+  MaxCharge: 10
+  charge: 0
 --- !u!212 &212467315951258678
 SpriteRenderer:
   m_ObjectHideFlags: 1
