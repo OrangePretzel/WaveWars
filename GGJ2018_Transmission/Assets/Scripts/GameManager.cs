@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
 	// If true we are paused
 	public bool IsPaused { get; private set; }
 
+	public static bool IsGamePaused => Instance.IsPaused;
+
+	private int PlayerCount = 0;
+
 	[SerializeField]
 	private List<Entity> TeamAEntities = new List<Entity>();
 	[SerializeField]
@@ -33,7 +37,17 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 
+		BindInputManagerEvents();
+
 		FindAllEntitiesInScene();
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			TogglePause();
+		}
 	}
 
 	public static List<Entity> GetEnemyEntities(int myTeamID)
@@ -47,6 +61,14 @@ public class GameManager : MonoBehaviour
 			default:
 				return new List<Entity>();
 		}
+	}
+
+	private void BindInputManagerEvents()
+	{
+		InputManager.OnResetPlayerDevices += ejectedPlayerCounts =>
+		{
+			PauseGame();
+		};
 	}
 
 	private void FindAllEntitiesInScene()

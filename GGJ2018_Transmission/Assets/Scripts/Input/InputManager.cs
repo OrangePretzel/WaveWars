@@ -1,5 +1,6 @@
 ﻿using InControl;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerInput
@@ -23,8 +24,9 @@ public class PlayerInput
 		if (PlayerDevice != InputManager.KEYBOARD_AND_MOUSE)
 			return new Vector3(HorizontalAim, VerticalAim).normalized;
 
-		var aimVec = (screenCamera.ScreenToWorldPoint(new Vector3(HorizontalAim, VerticalAim)) - originPoint).normalized;
+		var aimVec = (screenCamera.ScreenToWorldPoint(new Vector3(HorizontalAim, VerticalAim)) - originPoint);
 		aimVec.z = 0;
+		aimVec = aimVec.normalized;
 		return aimVec;
 	}
 
@@ -101,6 +103,8 @@ public class InputManager : MonoBehaviour
 			}
 			Debug.Log($"All devices reset!");
 		};
+
+		StartCoroutine(UpdateLoop());
 	}
 
 	private void FixedUpdate()
@@ -120,14 +124,9 @@ public class InputManager : MonoBehaviour
 			SetNextKeyboardPlayer();
 	}
 
-	private void Update()
-	{
-		UpdatePlayerInputs();
-	}
-
 	private void OnGUI()
 	{
-		const bool DEBUG_GUI = false;
+		const bool DEBUG_GUI = true;
 		if (DEBUG_GUI)
 		{
 			GUI.Label(new Rect(0, 0, 1000, 1000), $@"
@@ -143,6 +142,16 @@ Player 3:
 Player 4:
 {GetPlayerInput(3)}
 ");
+		}
+	}
+
+	private IEnumerator UpdateLoop()
+	{
+		while (true)
+		{
+			Debug.Log("Updating things");
+			UpdatePlayerInputs();
+			yield return new WaitForEndOfFrame();
 		}
 	}
 

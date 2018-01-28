@@ -49,6 +49,9 @@ public class Minion : Entity
 
 	private void Update()
 	{
+		if (GameManager.IsGamePaused)
+			return;
+
 		UpdateMinion();
 	}
 

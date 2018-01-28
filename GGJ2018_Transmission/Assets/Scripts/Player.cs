@@ -27,6 +27,9 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
+		if (GameManager.IsGamePaused)
+			return;
+
 		playerInput = InputManager.GetPlayerInput(playerID);
 		rigidbody.velocity = new Vector2(playerInput.HorizontalMovement * speed, playerInput.VerticalMovement * speed);
 		rigidbody.MovePosition(rigidbody.position + rigidbody.velocity * Time.deltaTime);
@@ -37,14 +40,16 @@ public class Player : MonoBehaviour
 
 	void HandleTransmission()
 	{
-		isTransmitting = playerInput.VerticalAim != 0 || playerInput.HorizontalAim != 0;
+		var aimVec = playerInput.GetNormalizedAim(transform.position, Camera.main);
+		isTransmitting = aimVec.sqrMagnitude != 0
+			&& (playerInput.PlayerDevice != InputManager.KEYBOARD_AND_MOUSE || Input.GetKey(KeyCode.Mouse0));
 
 		if (isTransmitting && charge > 0)
 		{
 			charge -= Time.deltaTime;
 
-			ShootTransmission(new Vector3(playerInput.HorizontalAim, playerInput.VerticalAim, 0));
-			Debug.DrawRay(playerPosition, new Vector3(playerInput.HorizontalAim, playerInput.VerticalAim, 0), Color.yellow, 5.0f, true);
+			ShootTransmission(aimVec);
+			Debug.DrawRay(playerPosition, aimVec, Color.yellow, 5.0f, true);
 		}
 
 		if (!isTransmitting && charge < MaxCharge)
