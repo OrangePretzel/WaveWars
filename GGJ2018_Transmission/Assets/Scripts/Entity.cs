@@ -10,11 +10,11 @@ public class Entity : MonoBehaviour
 	public bool Reflective { get { return reflective; } }
 
 	[SerializeField]
-	private int teamID = -1;
+	protected int teamID = -1;
 	[SerializeField]
-	private int playerID = -1;
+	protected int playerID = -1;
 	[SerializeField]
-	private bool reflective = false;
+	protected bool reflective = false;
 
 	public void SetEntityProperties(int teamID, int playerID, bool reflective)
 	{

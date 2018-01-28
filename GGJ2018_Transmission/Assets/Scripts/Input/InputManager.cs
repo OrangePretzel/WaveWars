@@ -149,7 +149,7 @@ Player 4:
 	{
 		while (true)
 		{
-			Debug.Log("Updating things");
+			//Debug.Log("Updating things");
 			UpdatePlayerInputs();
 			yield return new WaitForEndOfFrame();
 		}

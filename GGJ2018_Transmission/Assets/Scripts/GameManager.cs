@@ -63,6 +63,19 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	public static List<Entity> GetFriendlyEntities(int myTeamID)
+	{
+		switch (myTeamID)
+		{
+			case Entity.TEAM_A_ID:
+				return Instance.TeamAEntities;
+			case Entity.TEAM_B_ID:
+				return Instance.TeamBEntities;
+			default:
+				return new List<Entity>();
+		}
+	}
+
 	private void BindInputManagerEvents()
 	{
 		InputManager.OnResetPlayerDevices += ejectedPlayerCounts =>

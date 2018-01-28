@@ -107,12 +107,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b99961c0f48204cb65d02c98c885ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teamID: -1
+  playerID: -1
+  reflective: 0
   waveletPrefab: {fileID: 114002539641690498, guid: 9e83eeeb14fa3dc48a88562be04d5844,
     type: 2}
-  wavePower: 3
-  speed: 2
+  speed: 2.3
   density: 3
-  angle: 18
+  angle: 20
   numWavelets: 13
-  distToWaveletSpawn: 0.2
+  distToWaveletSpawn: 0
   wavelets: []
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 256

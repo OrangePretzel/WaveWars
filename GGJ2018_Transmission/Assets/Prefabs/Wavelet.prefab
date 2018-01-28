@@ -109,5 +109,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vertices: []
   uvs: []
-  wavefrontOffset: 0
-  leftover: 0
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 256

@@ -7,7 +7,7 @@ public class Wavelet: MonoBehaviour
     private float maxLength = 0.0f;
     private float length = 0.0f;
     private float speed = 0.5f;
-    private float waveDensity = 2.0f;
+    private int waveDensity = 2;
 
     private float angle = 4.0f;
     private float baseWidth = 0.3f;
@@ -20,29 +20,28 @@ public class Wavelet: MonoBehaviour
     public Vector2[] uvs;
     private float spreadRatio;
     private float halfWidth;
-    public float wavefrontOffset = 0.0f;
-    public float leftover;
+    private float leftover;
+    public LayerMask collisionLayer;
 
     void Start()
     {
         
-        
+
     }
 
-    public void Initialize(float power, float width, float angle, float speed, float density)
+    public void Initialize(float power, float width, float angle, float speed, int density)
     {
-
+        // Find the half angle, convert to radians, and use tan() to get the ratio of
+        // of length to width.
+        spreadRatio = Mathf.Tan(Mathf.Deg2Rad * (angle / 2.0f));
         baseWidth = width;
         halfWidth = baseWidth / 2.0f;
         this.angle = angle;
         wavePower = power;
-        maxLength = wavePower;
+        maxLength = power;
         this.speed = speed;
         waveDensity = density;
 
-        // Find the half angle, convert to radians, and use tan() to get the ratio of
-        // of length to width.
-        spreadRatio = Mathf.Tan(Mathf.Deg2Rad * (this.angle / 2.0f));
 
         mf = GetComponent<MeshFilter>();
         mesh = new Mesh();
@@ -65,7 +64,8 @@ public class Wavelet: MonoBehaviour
     {
         phase += speed * Time.deltaTime;
 
-        var hit = Physics2D.Raycast(transform.position, transform.up, wavePower);
+        var hit = Physics2D.Raycast(transform.position, transform.up, wavePower, collisionLayer.value);
+
         if (hit.collider != null)
         {
             SetWaveLength(hit.distance);
@@ -91,6 +91,11 @@ public class Wavelet: MonoBehaviour
             phase = phase - 1.0f;
         }
 
+        if (length < maxLength)
+        {
+            uvs[2].y = 1 + leftover;
+            uvs[3].y = 1 + leftover;
+        }
         uvs[2].y = 1 + leftover - (phase * waveDensity);
         uvs[3].y = 1 + leftover - (phase * waveDensity);
         uvs[0].y = 1 - tiling - (phase * waveDensity);

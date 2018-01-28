@@ -15,9 +15,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Obstacle
+  - Player
+  - Minion
   - 
   - 
   - 
@@ -42,6 +42,9 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 1359569409
+    locked: 0
+  - name: Sprite
+    uniqueID: 1538348339
     locked: 0
   - name: Default
     uniqueID: 0
