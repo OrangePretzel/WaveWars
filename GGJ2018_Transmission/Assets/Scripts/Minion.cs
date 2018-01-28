@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Minion : Entity
@@ -26,13 +27,19 @@ public class Minion : Entity
 	private Vector2 waveAffect;
 
 	[SerializeField]
-	private int hp, damage;
+	private float hp, damage;
+
+	public const float startHealth = 100;
+
+	public Canvas healthbarCanvas;
+	public Image healthbar;
 
 	private void OnEnable()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
-		hp=100;
+		hp=startHealth;
 		damage=5;
+		healthbarCanvas.enabled=false;
 	}
 
 	private void Update()
@@ -111,7 +118,8 @@ public class Minion : Entity
 	private void Attack(Minion other)
 	{
 		other.hp-=damage;
-		Debug.Log("Attacked the other minion!!! Their HP: "+other.hp);
+		other.healthbarCanvas.enabled=true;
+		other.healthbar.fillAmount = other.hp/startHealth;
 	}
 
 	private Entity GetNearbyEnemyEntity()
