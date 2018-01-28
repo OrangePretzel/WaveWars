@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class PlayerSelectScreen : MonoBehaviour
 {
 	private Canvas canvas;
+	public Canvas BalancedTeams;
 
 	public float TeamOffset = 1;
 	public float TransitionSpeed = 5;
@@ -84,6 +85,11 @@ public class PlayerSelectScreen : MonoBehaviour
 			var deltaPos = (targetPos - currentPos) * TransitionSpeed * Time.unscaledDeltaTime;
 			playerIcon.rectTransform.localPosition = new Vector3(currentPos + deltaPos, 0);
 		}
+	}
+
+	public void SetBalanced(bool isBalanced)
+	{
+		BalancedTeams.enabled = !isBalanced;
 	}
 
 	public void ToggleScreen(bool toggle)

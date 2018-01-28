@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	private List<Entity> TeamBEntities = new List<Entity>();
 
+	private int[] PlayerTeams = new int[4];
+
 	// Awake is fired BEFORE Start
 	void Awake()
 	{
@@ -65,15 +67,24 @@ public class GameManager : MonoBehaviour
 			}
 			PlayerCount = playerCount;
 
-			if (PlayerSelectScreen.AnyPlayerConnected() && PlayerSelectScreen.AreAllPlayersReady())
+			var balanced = AreTeamsBalanced();
+			if (!balanced)
 			{
-				Debug.Log("Ready!");
+				PlayerSelectScreen.SetBalanced(false);
+			}
+			else
+			{
+				PlayerSelectScreen.SetBalanced(true);
+				if (PlayerSelectScreen.AnyPlayerConnected() && PlayerSelectScreen.AreAllPlayersReady())
+				{
+					Debug.Log("Ready!");
 
-				// TODO: Prep game
+					// TODO: Prep game
 
-				UnpauseGame();
+					UnpauseGame();
 
-				HidePlayerSelectScreen();
+					HidePlayerSelectScreen();
+				}
 			}
 		}
 		else
@@ -94,10 +105,34 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	private bool AreTeamsBalanced()
+	{
+		var teamACount = 0;
+		var teamBCount = 0;
+		for (int i = 0; i < 4; i++)
+		{
+			if (PlayerTeams[i] == -1)
+				teamACount++;
+			else if (PlayerTeams[i] == 1)
+				teamBCount++;
+		}
+
+		Debug.Log($"1: {PlayerTeams[0]}, 1: {PlayerTeams[1]}, 1: {PlayerTeams[2]}, 1: {PlayerTeams[3]}");
+		Debug.Log($"A: {teamACount}, B: {teamBCount}");
+
+		if (Mathf.Abs(teamACount - teamBCount) > 1)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	private void HandleSinglePlayerInputForPlayerSelectionScreen(int i, PlayerInput input)
 	{
 		if (input.PlayerDevice == null)
 		{
+			PlayerTeams[i] = 0;
 			PlayerSelectScreen.UnAssignPlayerFromTeams(i);
 			PlayerSelectScreen.SetPlayerEnabled(i, false);
 		}
@@ -118,13 +153,16 @@ public class GameManager : MonoBehaviour
 				else
 				{
 					PlayerSelectScreen.SetPlayerEnabled(i, false);
+					PlayerTeams[i] = 0;
 					InputManager.DisconnectPlayerDevice(i);
 				}
 			}
 
 			if (input.HorizontalMovement != 0 && !PlayerSelectScreen.IsPlayerReady(i))
 			{
-				PlayerSelectScreen.AssignPlayerToTeam(i, ((int)Mathf.Sign(input.HorizontalMovement) + 1) / 2);
+				int team = ((int)Mathf.Sign(input.HorizontalMovement) + 1) / 2;
+				PlayerSelectScreen.AssignPlayerToTeam(i, team);
+				PlayerTeams[i] = (int)Mathf.Sign(input.HorizontalMovement);
 			}
 		}
 	}
@@ -159,7 +197,7 @@ public class GameManager : MonoBehaviour
 	{
 		InputManager.OnResetPlayerDevices += ejectedPlayerCounts =>
 		{
-			PauseGame();
+			PlayerCount = 0;
 		};
 	}
 
