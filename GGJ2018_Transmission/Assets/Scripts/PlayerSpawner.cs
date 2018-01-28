@@ -3,16 +3,25 @@ public class PlayerSpawner : MonoBehaviour
 {
   //public Player spawnMyPlayer;
   public int SECONDS_TIL_SPAWN = 10;
+  public bool spawnQueued;
   void Awake() {
-    //InvokeRepeating ("Spawn", 0f, spawnDelay);
+    spawnQueued=false;
   }
 
-  void Spawn(Player spawnMe) {
-    Invoke("ExecuteSpawn", SECONDS_TIL_SPAWN);
+  public void Spawn(Player spawnMe) {
+    if (!spawnQueued){
+      Invoke("ExecuteSpawn", SECONDS_TIL_SPAWN);
+      spawnQueued=true;
+    }
   }
 
-  void ExecuteSpawn(Player spawnMe) {
+  public bool IsSpawning() {
+    return spawnQueued;
+  }
+
+  public void ExecuteSpawn(Player spawnMe) {
     //if (playerID =)
-    spawnMe.SetActive(true);
+    spawnMe.gameObject.SetActive(true);
+    spawnQueued=false;
   }
 }
