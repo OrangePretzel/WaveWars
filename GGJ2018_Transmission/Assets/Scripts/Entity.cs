@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
@@ -27,4 +28,11 @@ public class Entity : MonoBehaviour
 		this.reflective = reflective;
 	}
 
+	public void TakeDamage(float damage)
+	{
+		hp -= damage;
+		UpdateHealthBar();
+	}
+
+	public virtual void UpdateHealthBar() { }
 }

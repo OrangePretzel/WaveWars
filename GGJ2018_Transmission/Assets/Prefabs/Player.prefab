@@ -148,9 +148,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca0f24440572544e49c69846ec4d5654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 0
+  hp: 0
+  damage: 0
   teamID: 0
   playerID: 0
   reflective: 0
+  TransmittingVelocityModifier: 0.75
   rigidbody: {fileID: 0}
   speed: 5
   MaxCharge: 10
@@ -166,6 +170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25794ab12dd1d3241b8fcc0805596eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 0
+  hp: 0
+  damage: 0
   teamID: -1
   playerID: -1
   reflective: 0

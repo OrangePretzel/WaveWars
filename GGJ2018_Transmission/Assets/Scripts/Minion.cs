@@ -29,14 +29,18 @@ public class Minion : Entity
 	[SerializeField]
 	private Vector2 waveAffect;
 
+	private Animator animator;
+
 	public Canvas healthbarCanvas;
 	public Image healthbar;
 
 	private void OnEnable()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
+		animator = GetComponentInChildren<Animator>();
 		hp = maxHP;
 		healthbarCanvas.enabled = false;
+		healthbar.fillAmount = 1;
 		graphicInitialScaleX = graphic.transform.localScale.x;
 	}
 
@@ -71,16 +75,15 @@ public class Minion : Entity
 
 	private void CollideWithEntity(Collision2D collision)
 	{
+		if (!(IsAffectedByWave || AlwaysAffectedByWave))
+			return;
+
 		var otherEntity = collision.gameObject.GetComponent<Entity>();
 		if (otherEntity == null)
 			return;
 
-		if (otherEntity.TeamID != TeamID)
-		{
-			var bounceBack = (Vector2)(transform.position - otherEntity.transform.position) * CollisionBounceMultiplier;
-			this.Attack((Entity)otherEntity);
-			BounceBack(bounceBack);
-		}
+		var bounceBack = (Vector2)(transform.position - otherEntity.transform.position) * CollisionBounceMultiplier;
+		BounceBack(bounceBack);
 	}
 
 	private void BounceBack(Vector2 direction)
@@ -109,12 +112,6 @@ public class Minion : Entity
 			Destroy(this.gameObject);
 		}
 
-		if (maxHP > hp)
-		{
-			healthbarCanvas.enabled = true;
-			healthbar.fillAmount = hp / maxHP;
-		}
-
 		//Debug.DrawLine(transform.position, transform.position + (Vector3)rigidbody.velocity);
 		if (IsAffectedByWave || AlwaysAffectedByWave)
 		{
@@ -122,15 +119,17 @@ public class Minion : Entity
 			if (enemy == null)
 			{
 				rigidbody.velocity += waveAffect;
+				animator.SetBool("IsAttacking", false);
 			}
 			else
 			{
 				var enemyDir = enemy.transform.position - transform.position;
 				rigidbody.velocity += (Vector2)enemyDir;
-
+				this.Attack(enemy);
 			}
+			animator.SetBool("IsWalking", true);
 
-			if (!AlwaysAffectedByWave)
+			if (IsAffectedByWave)
 			{
 				AffectedByPlayerIDs.Clear();
 				IsAffectedByWave = false;
@@ -151,11 +150,17 @@ public class Minion : Entity
 				rigidbody.velocity = rigidbody.velocity.normalized * MaxSpeed;
 			}
 		}
+		else
+		{
+			animator.SetBool("IsWalking", false);
+			animator.SetBool("IsAttacking", false);
+		}
 	}
 
 	private void Attack(Entity other)
 	{
-		other.hp -= damage;
+		animator.SetBool("IsAttacking", true);
+		other.TakeDamage(damage * Time.deltaTime);
 	}
 
 	private Entity GetNearbyEnemyEntity()
@@ -171,5 +176,19 @@ public class Minion : Entity
 		}
 		// no enemy within radius
 		return null;
+	}
+
+	public override void UpdateHealthBar()
+	{
+		if (maxHP > hp)
+		{
+			healthbarCanvas.enabled = true;
+			healthbar.fillAmount = hp / maxHP;
+		}
+		else
+		{
+			healthbarCanvas.enabled = false;
+			healthbar.fillAmount = 1;
+		}
 	}
 }
