@@ -38,13 +38,42 @@ GameObject:
   - component: {fileID: 114221900951337878}
   - component: {fileID: 50336122325975824}
   - component: {fileID: 58266738392242368}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1754192623609262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4519513021512302}
+  - component: {fileID: 114294001902514808}
+  m_Layer: 0
+  m_Name: WaveGun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4519513021512302
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1754192623609262}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4682949994230344}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4598759062893368
 Transform:
   m_ObjectHideFlags: 1
@@ -65,10 +94,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1268665801343208}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -8, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4598759062893368}
+  - {fileID: 4519513021512302}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -118,11 +148,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca0f24440572544e49c69846ec4d5654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teamID: 0
+  playerID: 0
+  reflective: 0
   rigidbody: {fileID: 0}
   speed: 5
-  playerID: 0
   MaxCharge: 10
   charge: 0
+--- !u!114 &114294001902514808
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1754192623609262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25794ab12dd1d3241b8fcc0805596eaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamID: -1
+  playerID: -1
+  reflective: 0
+  wavePower: 4
+  wavePrefab: {fileID: 114470938722069482, guid: 7f1acf77718ab8c48a1b07cba35c2995,
+    type: 2}
+  wave: {fileID: 0}
+  childEmitter: {fileID: 0}
 --- !u!212 &212467315951258678
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -154,9 +205,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1538348339
+  m_SortingLayer: -1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: f178146a44de340829e1c25c4ee4c072, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
