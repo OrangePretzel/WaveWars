@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Minion : Entity
@@ -14,6 +15,8 @@ public class Minion : Entity
 
 	public float CollisionBounceMultiplier = 2;
 
+	public bool AlwaysAffectedByWave = false;
+
 	public bool IsAffectedByWave = false;
 	private List<int> AffectedByPlayerIDs = new List<int>();
 
@@ -23,9 +26,20 @@ public class Minion : Entity
 	[SerializeField]
 	private Vector2 waveAffect;
 
+	[SerializeField]
+	private float hp, damage;
+
+	public const float startHealth = 100;
+
+	public Canvas healthbarCanvas;
+	public Image healthbar;
+
 	private void OnEnable()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
+		hp = startHealth;
+		damage = 5;
+		healthbarCanvas.enabled = false;
 	}
 
 	private void Update()
@@ -44,6 +58,7 @@ public class Minion : Entity
 			var bounceBack = (Vector2)(transform.position - otherEntity.transform.position) * CollisionBounceMultiplier;
 			rigidbody.velocity += bounceBack;
 			IgnoreMaxSpeedHack = IGNORE_MAX_SPEED_HACK_DURATION;
+			this.Attack((Minion)otherEntity);
 		}
 
 	}
@@ -60,11 +75,15 @@ public class Minion : Entity
 
 	private void UpdateMinion()
 	{
-			Debug.DrawLine(transform.position, transform.position + (Vector3)rigidbody.velocity);
-		if (IsAffectedByWave)
+		// Delete minion from scene if HP drops to/below zero
+		if (this.hp <= 0)
 		{
-			// Velocity Debug Line
+			Destroy(this.gameObject);
+		}
 
+		//Debug.DrawLine(transform.position, transform.position + (Vector3)rigidbody.velocity);
+		if (IsAffectedByWave || AlwaysAffectedByWave)
+		{
 			var enemy = GetNearbyEnemyEntity();
 			if (enemy == null)
 			{
@@ -74,6 +93,7 @@ public class Minion : Entity
 			{
 				var enemyDir = enemy.transform.position - transform.position;
 				rigidbody.velocity += (Vector2)enemyDir;
+
 			}
 
 			if (IgnoreMaxSpeedHack > 0)
@@ -90,8 +110,16 @@ public class Minion : Entity
 
 			IsAffectedByWave = false;
 			AffectedByPlayerIDs.Clear();
-			waveAffect = Vector2.zero;
+			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! UNCOMMMMEMEMNT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//waveAffect = Vector2.zero;
 		}
+	}
+
+	private void Attack(Minion other)
+	{
+		other.hp -= damage;
+		other.healthbarCanvas.enabled = true;
+		other.healthbar.fillAmount = other.hp / startHealth;
 	}
 
 	private Entity GetNearbyEnemyEntity()
@@ -101,10 +129,11 @@ public class Minion : Entity
 		foreach (var enemy in enemies)
 		{
 			var enemyDir = enemy.transform.position - transform.position;
+			// if there's an enemy within the cutoff radius:
 			if (enemyDir.sqrMagnitude <= NEARBY_ENEMY_DIST_CUTOFF_SQR)
 				return enemy;
 		}
-
+		// no enemy within radius
 		return null;
 	}
 }
