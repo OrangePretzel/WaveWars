@@ -29,19 +29,13 @@ public class Minion : Entity
 	[SerializeField]
 	private Vector2 waveAffect;
 
-	[SerializeField]
-	private float hp, damage;
-
-	public const float startHealth = 100;
-
 	public Canvas healthbarCanvas;
 	public Image healthbar;
 
 	private void OnEnable()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
-		hp = startHealth;
-		damage = 5;
+		hp = maxHP;
 		healthbarCanvas.enabled = false;
 		graphicInitialScaleX = graphic.transform.localScale.x;
 	}
@@ -84,7 +78,8 @@ public class Minion : Entity
 		if (otherEntity.TeamID != TeamID)
 		{
 			var bounceBack = (Vector2)(transform.position - otherEntity.transform.position) * CollisionBounceMultiplier;
-			this.Attack((Minion)otherEntity);
+			this.Attack((Entity)otherEntity);
+			BounceBack(bounceBack);
 		}
 	}
 
@@ -112,6 +107,12 @@ public class Minion : Entity
 		{
 			GameManager.RemoveEntity(this);
 			Destroy(this.gameObject);
+		}
+
+		if (maxHP > hp)
+		{
+			healthbarCanvas.enabled = true;
+			healthbar.fillAmount = hp / maxHP;
 		}
 
 		//Debug.DrawLine(transform.position, transform.position + (Vector3)rigidbody.velocity);
@@ -152,11 +153,9 @@ public class Minion : Entity
 		}
 	}
 
-	private void Attack(Minion other)
+	private void Attack(Entity other)
 	{
 		other.hp -= damage;
-		other.healthbarCanvas.enabled = true;
-		other.healthbar.fillAmount = other.hp / startHealth;
 	}
 
 	private Entity GetNearbyEnemyEntity()

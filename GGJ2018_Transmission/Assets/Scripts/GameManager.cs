@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Serializable]
+public struct GameSettings
+{
+	public bool UnlimitedTransmission;
+}
+
 public class GameManager : MonoBehaviour
 {
 	// This is the single instance of the game manager
@@ -10,8 +16,11 @@ public class GameManager : MonoBehaviour
 
 	// If true we are paused
 	public bool IsPaused { get; private set; }
-
 	public static bool IsGamePaused => Instance.IsPaused;
+
+	[SerializeField]
+	private GameSettings gameSettings;
+	public static GameSettings GameSettings { get { return Instance.gameSettings; } }
 
 	private int PlayerCount = 0;
 

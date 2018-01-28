@@ -1612,6 +1612,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e5f5bd6f8a3434491316f91a8e930b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSettings:
+    UnlimitedTransmission: 0
   TeamAEntities: []
   TeamBEntities: []
 --- !u!1 &1600120052
@@ -2006,6 +2008,11 @@ Prefab:
     - target: {fileID: 1268665801343208, guid: d8203a2c78bb89d4097ad6c0607ff654, type: 2}
       propertyPath: m_Name
       value: Player 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114221900951337878, guid: d8203a2c78bb89d4097ad6c0607ff654,
+        type: 2}
+      propertyPath: TransmittingVelocityModifier
+      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d8203a2c78bb89d4097ad6c0607ff654, type: 2}

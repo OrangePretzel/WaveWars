@@ -9,6 +9,10 @@ public class Entity : MonoBehaviour
 	public int PlayerID { get { return playerID; } }
 	public bool Reflective { get { return reflective; } }
 
+	public float maxHP;
+	public float hp;
+	public float damage;
+
 	[SerializeField]
 	protected int teamID = -1;
 	[SerializeField]
