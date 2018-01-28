@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4303137405226120}
   - component: {fileID: 33623097875237926}
-  - component: {fileID: 65413613762005520}
   - component: {fileID: 23063676644844830}
   - component: {fileID: 114470938722069482}
   m_Layer: 0
@@ -84,18 +83,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1924857901215234}
   m_Mesh: {fileID: 0}
---- !u!65 &65413613762005520
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1924857901215234}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114470938722069482
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -107,6 +94,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b99961c0f48204cb65d02c98c885ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 0
+  hp: 0
+  damage: 0
   teamID: -1
   playerID: -1
   reflective: 0
