@@ -526,6 +526,8 @@ MonoBehaviour:
   waveAffect: {x: 0, y: 0}
   healthbarCanvas: {fileID: 223943837164248994}
   healthbar: {fileID: 114118578860349410}
+  deathParticles: {fileID: 198844927127218740, guid: 48b2015c6e021e54ca37b2e2281f880e,
+    type: 2}
 --- !u!114 &114847964547847582
 MonoBehaviour:
   m_ObjectHideFlags: 1
