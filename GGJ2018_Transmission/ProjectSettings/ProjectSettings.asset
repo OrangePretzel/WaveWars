@@ -633,7 +633,7 @@ PlayerSettings:
   cloudServicesEnabled:
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: de9bfeb2-b9a8-42f7-ba18-1487feccffba
   projectName: GGJ2018_Transmission
   organizationId: sevensidedvoxel

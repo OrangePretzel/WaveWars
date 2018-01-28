@@ -36,6 +36,7 @@ void Update()
   Debug.Log("Charge: "+charge);
 }
 
+<<<<<<< HEAD
 void HandleTransmission(){
   // currently nothing, switch to push
   if ((playerInput.PushTransmission || playerInput.PullTransmission) && charge>0 && Aiming()){
@@ -51,6 +52,12 @@ void HandleTransmission(){
     Debug.Log("CHARGE LESS THAN OR EQUAL TO ZERO");
   }
 }
+=======
+		rb.velocity = new Vector2(playerInput.HorizontalMovement * speed, playerInput.VerticalMovement * speed);
+		rb.MovePosition(rb.position + rb.velocity * Time.deltaTime);
+		var playerPosition = this.transform.position;
+		var ray = new Vector3(aimVec.x, aimVec.y, 0);
+>>>>>>> 83c55e397137dee04d6f0604c9222099f76ca1ee
 
 void ChargeWhileIdle(){
   if (!transmission && charge<100){
@@ -58,11 +65,17 @@ void ChargeWhileIdle(){
   }
 }
 
+<<<<<<< HEAD
 bool Aiming(){
   if (playerInput.HorizontalAim != 0 || playerInput.VerticalAim != 0)
   {
     return true;
 } else { return false; }
+=======
+		//Debug.Log("Pull: "+playerInput.PullTransmission+", Push: "+playerInput.PushTransmission);
+		HandleTransmission();
+	}
+>>>>>>> 83c55e397137dee04d6f0604c9222099f76ca1ee
 
 }
 }
