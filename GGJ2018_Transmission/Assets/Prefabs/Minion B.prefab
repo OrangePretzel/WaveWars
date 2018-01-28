@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 114187370340929616}
   - component: {fileID: 50411084034539890}
   - component: {fileID: 58547047870526184}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Minion B
   m_TagString: TeamBEntity
   m_Icon: {fileID: 0}
@@ -526,6 +526,8 @@ MonoBehaviour:
   waveAffect: {x: 0, y: 0}
   healthbarCanvas: {fileID: 223943837164248994}
   healthbar: {fileID: 114118578860349410}
+  deathParticles: {fileID: 198844927127218740, guid: 48b2015c6e021e54ca37b2e2281f880e,
+    type: 2}
 --- !u!114 &114847964547847582
 MonoBehaviour:
   m_ObjectHideFlags: 1
