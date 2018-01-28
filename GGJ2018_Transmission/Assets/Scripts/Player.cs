@@ -4,65 +4,54 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
-public Rigidbody2D rb;
-public float speed;
-public int playerID = 0;
-private bool transmission;
-private PlayerInput playerInput;
-private int charge;
-private Vector3 ray;
-private Vector3 playerPosition;
-void Awake()
- {
-     rb = GetComponent<Rigidbody2D>();
-     GameManager.Instance.InitGameManager(this);
-     charge=100;
-     transmission=false;
-     playerInput = InputManager.GetPlayerInput(playerID);
-     ray = new Vector3(playerInput.HorizontalAim, playerInput.VerticalAim, 0);
- }
+	public new Rigidbody2D rigidbody;
+	public float speed;
+	public int playerID = 0;
+	private bool isTransmitting;
+	private PlayerInput playerInput;
 
-void Update()
-{
-  playerInput = InputManager.GetPlayerInput(playerID);
-  rb.velocity = new Vector2(playerInput.HorizontalMovement*speed, playerInput.VerticalMovement*speed);
-  rb.MovePosition(rb.position + rb.velocity * Time.deltaTime);
-  playerPosition = this.transform.position;
-  ray = new Vector3(playerInput.HorizontalAim, playerInput.VerticalAim, 0);
+	public float MaxCharge = 10;
 
-  HandleTransmission();
-  Debug.Log("Transmission: "+transmission);
-  ChargeWhileIdle();
-  Debug.Log("Charge: "+charge);
-}
+	[SerializeField]
+	private float charge;
 
-void HandleTransmission(){
-  // currently nothing, switch to push
-  if ((playerInput.PushTransmission || playerInput.PullTransmission) && charge>0 && Aiming()){
-    transmission=true;
-    charge--;
-    Debug.DrawRay(playerPosition, ray, Color.yellow, 5.0f, true);
-  }
-  else if (!playerInput.PushTransmission && !playerInput.PullTransmission && Aiming()){
-    transmission=false;
-  }
-  else if (transmission && charge<=0){
-    transmission=false;
-    Debug.Log("CHARGE LESS THAN OR EQUAL TO ZERO");
-  }
-}
+	private Vector3 playerPosition;
 
-void ChargeWhileIdle(){
-  if (!transmission && charge<100){
-    charge++;
-  }
-}
+	void Awake()
+	{
+		rigidbody = GetComponent<Rigidbody2D>();
+		charge = MaxCharge;
+		isTransmitting = false;
+		playerInput = InputManager.GetPlayerInput(playerID);
+	}
 
-bool Aiming(){
-  if (playerInput.HorizontalAim != 0 || playerInput.VerticalAim != 0)
-  {
-    return true;
-} else { return false; }
+	void Update()
+	{
+		playerInput = InputManager.GetPlayerInput(playerID);
+		rigidbody.velocity = new Vector2(playerInput.HorizontalMovement * speed, playerInput.VerticalMovement * speed);
+		rigidbody.MovePosition(rigidbody.position + rigidbody.velocity * Time.deltaTime);
+		playerPosition = this.transform.position;
 
-}
+		HandleTransmission();
+	}
+
+	void HandleTransmission()
+	{
+		isTransmitting = playerInput.VerticalAim != 0 || playerInput.HorizontalAim != 0;
+
+		if (isTransmitting && charge > 0)
+		{
+			charge -= Time.deltaTime;
+
+			Vector3 ray = new Vector3(playerInput.HorizontalAim, playerInput.VerticalAim, 0);
+			Debug.DrawRay(playerPosition, ray, Color.yellow, 5.0f, true);
+		}
+
+		if (!isTransmitting && charge < MaxCharge)
+		{
+			charge += Time.deltaTime;
+			if (charge >= MaxCharge)
+				charge = MaxCharge;
+		}
+	}
 }
