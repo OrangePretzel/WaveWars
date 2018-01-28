@@ -32,6 +32,7 @@ public class Minion : Entity
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
 		hp=100;
+		damage=10;
 	}
 
 	private void Update()
@@ -50,6 +51,8 @@ public class Minion : Entity
 			var bounceBack = (Vector2)(transform.position - otherEntity.transform.position) * CollisionBounceMultiplier;
 			rigidbody.velocity += bounceBack;
 			IgnoreMaxSpeedHack = IGNORE_MAX_SPEED_HACK_DURATION;
+			this.Attack((Minion)otherEntity);
+			Debug.Log("reached Attack");
 		}
 
 	}
@@ -78,6 +81,7 @@ public class Minion : Entity
 			{
 				var enemyDir = enemy.transform.position - transform.position;
 				rigidbody.velocity += (Vector2)enemyDir;
+
 			}
 
 			if (IgnoreMaxSpeedHack > 0)
@@ -94,7 +98,7 @@ public class Minion : Entity
 
 			IsAffectedByWave = false;
 			AffectedByPlayerIDs.Clear();
-			waveAffect = Vector2.zero;
+			//waveAffect = Vector2.zero;
 		}
 		if (hp<=0){
 			Destroy(this.gameObject);
@@ -104,6 +108,7 @@ public class Minion : Entity
 	private void Attack(Minion other)
 	{
 		other.hp-=damage;
+		Debug.Log("Attacked the other minion!!! Their HP: "+other.hp);
 	}
 
 	private Entity GetNearbyEnemyEntity()
