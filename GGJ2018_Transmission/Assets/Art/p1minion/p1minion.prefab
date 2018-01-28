@@ -100,7 +100,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4644755452455158}
   - component: {fileID: 212778074678432708}
-  - component: {fileID: 95135906995452468}
   m_Layer: 0
   m_Name: minion_body
   m_TagString: Untagged
@@ -220,7 +219,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1512657680350062}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.29, y: -1.52, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4644755452455158}
@@ -311,23 +310,6 @@ Transform:
   m_Father: {fileID: 4644755452455158}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 2.7210002}
---- !u!95 &95135906995452468
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1881897926532066}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b27b3c33cf5991a4095ac7fcd49fcfa8, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!95 &95226705245282070
 Animator:
   serializedVersion: 3
