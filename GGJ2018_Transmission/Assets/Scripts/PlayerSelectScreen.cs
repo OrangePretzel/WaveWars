@@ -86,7 +86,6 @@ public class PlayerSelectScreen : MonoBehaviour
 	{
 		BalancedTeams.enabled = !isBalanced;
 	}
-
 	public void ToggleScreen(bool toggle)
 	{
 		canvas.enabled = toggle;

@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
+
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
 				TogglePause();
@@ -94,6 +95,7 @@ public class GameManager : MonoBehaviour
 
 			if (PlayerCount == 0)
 			{
+
 				ShowPlayerSelectScreen();
 
 				PauseGame();
@@ -125,6 +127,7 @@ public class GameManager : MonoBehaviour
 	{
 		if (input.PlayerDevice == null)
 		{
+
 			PlayerTeams[i] = 0;
 			PlayerSelectScreen.UnAssignPlayerFromTeams(i);
 			PlayerSelectScreen.SetPlayerEnabled(i, false);
@@ -156,6 +159,7 @@ public class GameManager : MonoBehaviour
 				int team = ((int)Mathf.Sign(input.HorizontalMovement) + 1) / 2;
 				PlayerSelectScreen.AssignPlayerToTeam(i, team);
 				PlayerTeams[i] = (int)Mathf.Sign(input.HorizontalMovement);
+
 			}
 		}
 	}
