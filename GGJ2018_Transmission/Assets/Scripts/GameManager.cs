@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
 			{
 				if (!spawner.IsSpawning())
 				{
-					spawner.SpawnPlayer(deadPlayer);
+					spawner.Spawn(deadPlayer);
 					return;
 				}
 			}
@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
 			{
 				if (!spawner.IsSpawning())
 				{
-					spawner.SpawnPlayer(deadPlayer);
+					spawner.Spawn(deadPlayer);
 					return;
 				}
 			}
