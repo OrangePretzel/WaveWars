@@ -22,6 +22,10 @@ public class Minion : Entity
 
 	private float IgnoreMaxSpeedHack = 0;
 
+	[SerializeField]
+	private GameObject graphic;
+	private float graphicInitialScaleX;
+
 	private new Rigidbody2D rigidbody;
 	[SerializeField]
 	private Vector2 waveAffect;
@@ -40,6 +44,7 @@ public class Minion : Entity
 		hp = startHealth;
 		damage = 5;
 		healthbarCanvas.enabled = false;
+		graphicInitialScaleX = graphic.transform.localScale.x;
 	}
 
 	private void Update()
@@ -78,6 +83,7 @@ public class Minion : Entity
 		// Delete minion from scene if HP drops to/below zero
 		if (this.hp <= 0)
 		{
+			GameManager.RemoveEntity(this);
 			Destroy(this.gameObject);
 		}
 
@@ -96,6 +102,8 @@ public class Minion : Entity
 
 			}
 
+			graphic.transform.localScale = new Vector3(Mathf.Sign(rigidbody.velocity.x) * graphicInitialScaleX, graphic.transform.localScale.y, 1);
+
 			if (IgnoreMaxSpeedHack > 0)
 			{
 				IgnoreMaxSpeedHack -= Time.deltaTime;
@@ -108,10 +116,12 @@ public class Minion : Entity
 				rigidbody.velocity = rigidbody.velocity.normalized * MaxSpeed;
 			}
 
-			IsAffectedByWave = false;
-			AffectedByPlayerIDs.Clear();
-			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! UNCOMMMMEMEMNT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			//waveAffect = Vector2.zero;
+			if (!AlwaysAffectedByWave)
+			{
+				AffectedByPlayerIDs.Clear();
+				IsAffectedByWave = false;
+				waveAffect = Vector2.zero;
+			}
 		}
 	}
 

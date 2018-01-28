@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -30,6 +32,8 @@ public class GameManager : MonoBehaviour
 			Destroy(this);
 			return;
 		}
+
+		FindAllEntitiesInScene();
 	}
 
 	public static List<Entity> GetEnemyEntities(int myTeamID)
@@ -43,6 +47,21 @@ public class GameManager : MonoBehaviour
 			default:
 				return new List<Entity>();
 		}
+	}
+
+	private void FindAllEntitiesInScene()
+	{
+		var teamAEntities = GameObject.FindGameObjectsWithTag("TeamAEntity").Select(go => go.GetComponent<Entity>());
+		var teamBEntities = GameObject.FindGameObjectsWithTag("TeamBEntity").Select(go => go.GetComponent<Entity>());
+
+		TeamAEntities.AddRange(teamAEntities);
+		TeamBEntities.AddRange(teamBEntities);
+	}
+
+	public static void RemoveEntity(Entity entity)
+	{
+		Instance.TeamAEntities.Remove(entity);
+		Instance.TeamBEntities.Remove(entity);
 	}
 
 	#region Pause/Play
