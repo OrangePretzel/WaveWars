@@ -46,22 +46,29 @@ void Update()
 
 void HandleTransmission(){
   // currently nothing, switch to push
-  if (transmission==0 && playerInput.PushTransmission && charge>0){
+  if (transmission==0 && playerInput.PushTransmission && charge>0 && Aiming()){
     transmission=1;
   }
   // currently nothing, switch to pull
-  else if (transmission==0 && playerInput.PullTransmission && charge>0){
+  else if (transmission==0 && playerInput.PullTransmission && charge>0 && Aiming()){
     transmission=2;
   }
-  else if (!playerInput.PushTransmission && !playerInput.PullTransmission){
+  else if (!playerInput.PushTransmission && !playerInput.PullTransmission && Aiming()){
     transmission=0;
   }
-  else if (transmission==1 && charge<0){
+  else if (transmission==1 && charge<=0){
     transmission=0;
   }
-  else if (transmission==2 && charge<0){
+  else if (transmission==2 && charge<=0){
     transmission=0;
   }
 }
 
+bool Aiming(){
+  if (playerInput.HorizontalAim != 0 || playerInput.VerticalAim != 0)
+  {
+    return true;
+} else { return false; }
+
+}
 }
