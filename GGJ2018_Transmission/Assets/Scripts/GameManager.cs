@@ -53,9 +53,25 @@ public class GameManager : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Escape))
+		if (IsInPlayerSelection)
 		{
-			TogglePause();
+
+		}
+		else
+		{
+			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				TogglePause();
+			}
+
+			if (PlayerCount == 0)
+			{
+				Debug.Log("No Players Connected!");
+
+				ShowPlayerSelectScreen();
+
+				PauseGame();
+			}
 		}
 	}
 
@@ -139,4 +155,13 @@ public class GameManager : MonoBehaviour
 
 	#endregion
 
+	public bool IsInPlayerSelection;
+	public Canvas PlayerSelectScreen;
+
+	private void ShowPlayerSelectScreen()
+	{
+		IsInPlayerSelection = true;
+
+		PlayerSelectScreen.enabled = true;
+	}
 }

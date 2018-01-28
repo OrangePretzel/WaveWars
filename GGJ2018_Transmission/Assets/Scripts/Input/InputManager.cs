@@ -107,23 +107,6 @@ public class InputManager : MonoBehaviour
 		StartCoroutine(UpdateLoop());
 	}
 
-	private void FixedUpdate()
-	{
-		foreach (var inputDevice in InControl.InputManager.Devices)
-		{
-			if (!inputDevice.IsAttached || !inputDevice.IsKnown || !inputDevice.IsSupportedOnThisPlatform)
-				continue;
-
-			if (inputDevice.Command)
-			{
-				SetNextControllerPlayer(inputDevice);
-			}
-		}
-
-		if (Input.GetKey(KeyCode.Space))
-			SetNextKeyboardPlayer();
-	}
-
 	private void OnGUI()
 	{
 		const bool DEBUG_GUI = true;
@@ -149,7 +132,7 @@ Player 4:
 	{
 		while (true)
 		{
-			//Debug.Log("Updating things");
+			ListenForPlayers();
 			UpdatePlayerInputs();
 			yield return new WaitForEndOfFrame();
 		}
@@ -223,6 +206,23 @@ Player 4:
 				InputDevice = inputDevice
 			};
 		}
+	}
+
+	public void ListenForPlayers()
+	{
+		foreach (var inputDevice in InControl.InputManager.Devices)
+		{
+			if (!inputDevice.IsAttached || !inputDevice.IsKnown || !inputDevice.IsSupportedOnThisPlatform)
+				continue;
+
+			if (inputDevice.Command)
+			{
+				SetNextControllerPlayer(inputDevice);
+			}
+		}
+
+		if (Input.GetKey(KeyCode.Space))
+			SetNextKeyboardPlayer();
 	}
 
 	private void UpdatePlayerInputs()
