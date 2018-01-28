@@ -35,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1339339449171934}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.49, y: -0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -52,11 +52,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11da072cb6ae044d0a4cc85931067b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TEAM_ID: 1
+  TEAM_ID: 0
   spawnDelay: 5
   thingToSpawn: {fileID: 1751939360947030, guid: b0ffcce1678f5b0419e9d0657ac455a2,
     type: 2}
   minions: {fileID: 0}
+  lastSpawn: 0
 --- !u!212 &212188511129790006
 SpriteRenderer:
   m_ObjectHideFlags: 1
