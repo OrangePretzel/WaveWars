@@ -12,6 +12,8 @@ public struct GameSettings
 
 public class GameManager : MonoBehaviour
 {
+	public AudioSource MinionAudioSource;
+
 	// This is the single instance of the game manager
 	public static GameManager Instance { get; private set; }
 

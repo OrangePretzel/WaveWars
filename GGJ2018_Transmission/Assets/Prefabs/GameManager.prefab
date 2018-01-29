@@ -1705,6 +1705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e5f5bd6f8a3434491316f91a8e930b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MinionAudioSource: {fileID: 0}
   PlayerAPrefab: {fileID: 1268665801343208, guid: d8203a2c78bb89d4097ad6c0607ff654,
     type: 2}
   PlayerBPrefab: {fileID: 1130427524984098, guid: 7bc06b9bd2100f84199e2cb634024c95,
@@ -2278,7 +2279,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1530747816407228}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 0}
@@ -2651,7 +2652,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 960, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 800, y: 185}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224708058922478480
@@ -2690,7 +2691,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 960, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 800, y: 185}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224784246331888882
