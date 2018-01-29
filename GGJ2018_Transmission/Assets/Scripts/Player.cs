@@ -21,6 +21,8 @@ public class Player : Entity
 	public Image healthbar;
 	public ParticleSystem deathParticles;
 
+	private Animator animator;
+
 	void Awake()
 	{
 		hp = maxHP;
@@ -30,6 +32,8 @@ public class Player : Entity
 		playerInput = InputManager.GetPlayerInput(PlayerID);
 		waveEmitter = GetComponentInChildren<WaveEmitter>();
 		waveEmitter?.SetEntityProperties(teamID, playerID, reflective);
+
+		animator = GetComponentInChildren<Animator>();
 	}
 
 	void Update()
@@ -62,6 +66,8 @@ public class Player : Entity
 			var dir = Mathf.Sign(rigidbody.velocity.x);
 			transform.localScale = new Vector3(dir, 1, 1);
 		}
+
+		animator.SetBool("IsWalking", rigidbody.velocity.sqrMagnitude != 0);
 
 		if (isTransmitting && charge > 0)
 		{

@@ -9,6 +9,11 @@ public class Spawner : MonoBehaviour
 
 	public float lastSpawn;
 
+	private void Awake()
+	{
+		lastSpawn = Time.time - spawnDelay;
+	}
+
 	void FixedUpdate()
 	{
 		if (GameManager.IsGamePaused)

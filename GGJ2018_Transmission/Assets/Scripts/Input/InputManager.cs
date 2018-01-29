@@ -118,7 +118,7 @@ public class InputManager : MonoBehaviour
 
 	private void OnGUI()
 	{
-		const bool DEBUG_GUI = true;
+		const bool DEBUG_GUI = false;
 		if (DEBUG_GUI)
 		{
 			GUI.Label(new Rect(0, 0, 1000, 1000), $@"
