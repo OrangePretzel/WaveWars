@@ -457,7 +457,7 @@ MonoBehaviour:
   reflective: 0
   TransmittingVelocityModifier: 0.75
   rigidbody: {fileID: 0}
-  speed: 5
+  speed: 6
   MaxCharge: 10
   charge: 0
   healthbarCanvas: {fileID: 223433604771130614}

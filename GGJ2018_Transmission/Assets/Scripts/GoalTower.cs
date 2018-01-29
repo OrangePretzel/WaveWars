@@ -6,48 +6,46 @@ using UnityEngine.SceneManagement;
 
 public class GoalTower : Entity
 {
-    public Canvas healthbarCanvas;
-    public Image healthbar;
-    public Image gameOverImage;
-    public float delay = 5.0f;
-    public string sceneName;
+	public Canvas healthbarCanvas;
+	public Image healthbar;
+	public Image gameOverImage;
+	public float delay = 5.0f;
 
+	void Start()
+	{
+		hp = maxHP;
+	}
 
-    void Start()
-    {
-        hp = maxHP;
-    }
+	void Update()
+	{
+		if (hp <= 0)
+		{
+			// GameOver
+			GameManager.Instance.TogglePause();
+			gameOverImage.gameObject.SetActive(true);
+			StartCoroutine(DelayToSceneSwitch());
+		}
+	}
 
-    void Update()
-    {
-        if (hp <= 0)
-        {
-            // GameOver
-            GameManager.Instance.TogglePause();
-            gameOverImage.gameObject.SetActive(true);
-            StartCoroutine(DelayToSceneSwitch());
-        }
-    }
+	IEnumerator DelayToSceneSwitch()
+	{
+		yield return new WaitForSeconds(delay);
 
-    IEnumerator DelayToSceneSwitch()
-    {
-        yield return new WaitForSeconds(delay);
+		GameManager.NewGame();
+	}
 
-        SceneManager.LoadScene(sceneName);
-    }
-
-    public override void UpdateHealthBar()
-    {
-        if (maxHP > hp)
-        {
-            healthbarCanvas.enabled = true;
-            healthbar.fillAmount = hp / maxHP;
-        }
-        else
-        {
-            healthbarCanvas.enabled = false;
-            healthbar.fillAmount = 1;
-        }
-    }
+	public override void UpdateHealthBar()
+	{
+		if (maxHP > hp)
+		{
+			healthbarCanvas.enabled = true;
+			healthbar.fillAmount = hp / maxHP;
+		}
+		else
+		{
+			healthbarCanvas.enabled = false;
+			healthbar.fillAmount = 1;
+		}
+	}
 
 }

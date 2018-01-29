@@ -111,7 +111,8 @@ public class Minion : Entity
         if (this.hp <= 0)
         {
             Instantiate(deathParticles, transform.position, new Quaternion());
-            GameManager.RemoveEntity(this);
+			GameManager.Instance.MinionAudioSource.Play();
+			GameManager.RemoveEntity(this);
             Destroy(this.gameObject);
         }
 
