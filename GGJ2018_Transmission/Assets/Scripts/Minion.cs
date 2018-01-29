@@ -163,7 +163,7 @@ public class Minion : Entity
 	private void Attack(Entity other)
 	{
 		animator.SetBool("IsAttacking", true);
-		other.TakeDamage(damage * Time.deltaTime);
+		other.TakeDamage(damage * Time.deltaTime * AffectedByPlayerIDs.Count);
 	}
 
 	private Entity GetNearbyEnemyEntity()
