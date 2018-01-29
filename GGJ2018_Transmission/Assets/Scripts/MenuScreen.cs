@@ -26,7 +26,7 @@ public class MenuScreen : MonoBehaviour
 
 	public void NewGame()
 	{
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		GameManager.NewGame();
 	}
 
 	public void QuitGame()

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public struct GameSettings
@@ -21,6 +22,11 @@ public class GameManager : MonoBehaviour
 	// If true we are paused
 	public bool IsPaused { get; private set; }
 	public static bool IsGamePaused => Instance.IsPaused;
+
+	public static void NewGame()
+	{
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
 
 	[SerializeField]
 	private GameSettings gameSettings = new GameSettings();
